@@ -130,6 +130,16 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* PULL QUOTE */}
+      <section className="px-5 md:px-8 py-24 md:py-32 border-b border-zinc-100 bg-brand-tint">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tight text-zinc-900 leading-[1.05]">
+            &ldquo;Life&rsquo;s so much easier when your customers{" "}
+            <span className="text-brand">carry you.</span>&rdquo;
+          </p>
+        </div>
+      </section>
+
       {/* EXAMPLES — teaser */}
       <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100 bg-[#fafaf8]">
         <div className="max-w-6xl mx-auto">
