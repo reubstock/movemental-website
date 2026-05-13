@@ -59,7 +59,7 @@ export default function HomePage() {
               How we work →
             </Link>
             <Link
-              href="/engage"
+              href="/engage#contact"
               className="inline-flex items-center border border-zinc-300 hover:border-zinc-900 text-zinc-900 px-6 py-3 text-sm font-extrabold tracking-wide rounded transition-colors"
             >
               Start a conversation

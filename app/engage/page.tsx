@@ -93,7 +93,7 @@ export default function EngagePage() {
       </section>
 
       {/* CONTACT CTA */}
-      <section className="px-5 md:px-8 py-24 md:py-28 bg-[#0f0f10] text-white">
+      <section id="contact" className="px-5 md:px-8 py-24 md:py-28 bg-[#0f0f10] text-white scroll-mt-20">
         <div className="max-w-3xl mx-auto text-center">
           <Eyebrow className="text-[#5dd0f5]">Get in touch</Eyebrow>
           <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-[1.02] mb-6">
