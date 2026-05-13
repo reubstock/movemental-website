@@ -11,7 +11,7 @@ const EXAMPLE_LOGOS = [
   },
   {
     name: "Indivisible · No Kings",
-    src: "/images/indivisible.svg",
+    src: "/images/no-kings.jpg",
     widthClass: "h-12 md:h-14 rounded-full",
   },
 ];

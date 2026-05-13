@@ -19,7 +19,7 @@ const PROOF_POINTS = [
   },
   {
     name: "Indivisible · No Kings",
-    src: "/images/indivisible.svg",
+    src: "/images/no-kings.jpg",
     logoClass: "h-12 md:h-14 rounded-full",
     body: "Editorial and community infrastructure for one of 2025's fastest-growing civic movements.",
     metric: "9M activists on the street",

@@ -47,7 +47,7 @@ const EXAMPLES: Example[] = [
   {
     slug: "indivisible-no-kings",
     name: "Indivisible · No Kings",
-    logoSrc: "/images/indivisible.svg",
+    logoSrc: "/images/no-kings.jpg",
     logoClass: "h-14 md:h-16 rounded-full",
     tag: "Civic Movement",
     headline:
