@@ -131,10 +131,59 @@ export default function ExamplesPage() {
         </div>
       </section>
 
-      {/* NOTE */}
-      <section className="px-5 md:px-8 py-16 border-b border-zinc-100">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-base md:text-lg text-zinc-500 leading-relaxed">
+      {/* FROM THE FIELD */}
+      <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100">
+        <div className="max-w-5xl mx-auto">
+          <Eyebrow>From the field</Eyebrow>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-12 max-w-3xl">
+            What the field is saying.
+          </h2>
+
+          <article className="bg-white border border-zinc-200 rounded-lg p-7 md:p-10">
+            <div className="flex items-center gap-4 mb-7 pb-5 border-b border-zinc-100">
+              <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand">
+                Financial Services
+              </div>
+              <span className="text-zinc-300">·</span>
+              <img
+                src="/images/chime-logo.svg"
+                alt="Chime"
+                className="h-6 md:h-7 w-auto"
+              />
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 items-start">
+              <img
+                src="/images/vineet-mehra.png"
+                alt="Vineet Mehra"
+                className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border border-zinc-200 flex-shrink-0"
+              />
+              <div className="flex-1">
+                <blockquote className="text-lg md:text-xl text-zinc-800 leading-relaxed mb-5 italic">
+                  &ldquo;If I were running an agency or holding company today
+                  (which I am not), I wouldn&rsquo;t be tweaking the old model
+                  — I&rsquo;d be throwing out the playbook. We&rsquo;re in
+                  the middle of the biggest platform shift our industry has
+                  ever seen (AI), and the clients who sit in my seat — CMOs
+                  — are already recalibrating what &lsquo;value&rsquo; looks
+                  like.&rdquo;
+                </blockquote>
+                <div className="text-sm font-bold text-zinc-900 mb-5">
+                  Vineet Mehra · Chief Growth and Marketing Officer, Chime
+                </div>
+                <a
+                  href="https://www.linkedin.com/posts/vineetmehra1_if-i-were-running-an-agency-or-holding-company-activity-7394411524892676096-B-_V/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-brand text-sm font-extrabold tracking-wide hover:opacity-70"
+                >
+                  Read the full post on LinkedIn ↗
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <p className="mt-10 text-sm md:text-base text-zinc-500 leading-relaxed text-center">
             More recent work — including engagements in pharma, AI, and
             virtual worlds — is available on request.
           </p>
