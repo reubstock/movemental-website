@@ -39,9 +39,9 @@ export default function HomePage() {
             <span className="text-brand">global movements.</span>
           </h1>
           <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl mb-10">
-            Movemental builds the editorial machine that carries a
-            category-defining idea into the world — and the community that
-            keeps it alive once it lands.
+            Movemental builds the story machine to carry a category-defining
+            idea into the world — and the community that keeps it alive once
+            it lands.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
