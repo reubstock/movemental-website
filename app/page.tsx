@@ -40,7 +40,7 @@ export default function HomePage() {
           </h1>
           <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl mb-10">
             Movemental builds the machine to carry a category-defining idea
-            into the world — and the community that keeps it alive once it
+            into the world. And the community that keeps it alive once it
             lands.
           </p>
           <div className="flex flex-wrap gap-3">
