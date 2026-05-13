@@ -31,6 +31,7 @@ OUTPUT FORMAT
 If an input is empty or weak, infer from the others. Never refuse.`;
 
 type Body = {
+  industry?: string;
   change?: string;
   unsaid?: string;
   why?: string;
@@ -54,6 +55,7 @@ export async function POST(req: Request) {
     return new Response("Invalid JSON.", { status: 400 });
   }
 
+  const industry = body.industry?.trim() ?? "";
   const change = body.change?.trim() ?? "";
   const unsaid = body.unsaid?.trim() ?? "";
   const why = body.why?.trim() ?? "";
@@ -67,16 +69,20 @@ export async function POST(req: Request) {
   const userMessage = [
     "INPUTS",
     "",
+    industry ? `Industry: ${industry}` : "",
     `What I want to change: ${change || "(not specified)"}`,
     `The unspoken truth: ${unsaid || "(not specified)"}`,
     `Why this is mine to say: ${why || "(not specified)"}`,
     `What I want readers to do: ${ask || "(not specified)"}`,
     audience ? `Audience: ${audience}` : "",
     "",
+    industry
+      ? `Ground the letter in ${industry}: use that field's vocabulary, name its actual players or recent shifts where it strengthens the case, and write as if a reader inside that industry will recognize themselves immediately. Do not name the industry as a label.`
+      : "",
+    "",
     "Write the letter now. Five paragraphs. 280-420 words. No labels.",
   ]
-    .filter((l) => l !== null && l !== undefined)
-    .filter((l) => l !== "" || true)
+    .filter((l) => l !== "")
     .join("\n");
 
   const client = new Anthropic({ apiKey });

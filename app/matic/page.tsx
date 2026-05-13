@@ -4,6 +4,17 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import Eyebrow from "../components/Eyebrow";
 
+const INDUSTRIES = [
+  "Financial Services",
+  "Healthcare & Pharma",
+  "Technology & AI",
+  "Media & Marketing",
+  "Energy & Climate",
+  "Education",
+  "Civic & Political",
+  "Other",
+];
+
 type Question = {
   n: string;
   key: "change" | "unsaid" | "why" | "ask";
@@ -48,6 +59,7 @@ const STATUS_META: Record<Status, { dot: string; label: string }> = {
 };
 
 export default function MaticPage() {
+  const [industry, setIndustry] = useState("");
   const [values, setValues] = useState<Record<string, string>>({});
   const [letter, setLetter] = useState("");
   const [status, setStatus] = useState<Status>("idle");
@@ -77,7 +89,7 @@ export default function MaticPage() {
       const res = await fetch("/api/generate-letter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, industry }),
         signal: controller.signal,
       });
 
@@ -115,6 +127,7 @@ export default function MaticPage() {
   };
 
   const reset = () => {
+    setIndustry("");
     setValues({});
     setLetter("");
     setStatus("idle");
@@ -145,6 +158,56 @@ export default function MaticPage() {
           </h1>
           <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl">
             Four questions. One short open letter. Under ninety seconds.
+          </p>
+        </div>
+      </section>
+
+      {/* INDUSTRY SELECTOR */}
+      <section className="px-5 md:px-8 py-10 md:py-12 border-b border-zinc-100 bg-[#fafaf8]">
+        <div className="max-w-5xl mx-auto">
+          <label
+            htmlFor="industry"
+            className="block text-[10px] font-mono font-bold tracking-[0.18em] text-brand mb-3"
+          >
+            INDUSTRY
+          </label>
+          <div className="relative">
+            <select
+              id="industry"
+              value={industry}
+              onChange={(e) => setIndustry(e.target.value)}
+              className={`w-full appearance-none bg-white border rounded-lg px-5 py-4 pr-12 text-lg md:text-xl font-bold tracking-tight focus:outline-none focus:border-brand transition-colors cursor-pointer ${
+                industry
+                  ? "border-brand text-zinc-900"
+                  : "border-zinc-200 text-zinc-400"
+              }`}
+            >
+              <option value="">Select an industry…</option>
+              {INDUSTRIES.map((i) => (
+                <option key={i} value={i} className="text-zinc-900">
+                  {i}
+                </option>
+              ))}
+            </select>
+            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400">
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </div>
+          </div>
+          <p className="mt-3 text-xs font-mono text-zinc-400">
+            // Frames the draft. Picks the players and references the letter
+            leans on.
           </p>
         </div>
       </section>
