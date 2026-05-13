@@ -38,10 +38,12 @@ export default function HomePage() {
             We turn promising ideas into{" "}
             <span className="text-brand">global movements.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl mb-10">
+          <p className="text-xl md:text-2xl text-zinc-600 leading-snug text-balance max-w-5xl mb-3">
             Movemental builds the machine to carry a category-defining idea
-            into the world. And the community that keeps it alive once it
-            lands.
+            into the world.
+          </p>
+          <p className="text-xl md:text-2xl text-zinc-600 leading-snug text-balance max-w-3xl mb-10">
+            And the community that keeps it alive once it lands.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
