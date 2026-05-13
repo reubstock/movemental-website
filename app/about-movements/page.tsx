@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import Eyebrow from "../components/Eyebrow";
 
@@ -19,9 +18,9 @@ const STACK = [
     body: "For specific campaigns we ship a one-page site — like this one — that puts a single ask in front of a defined audience. Built in days, not weeks. Owned, indexable, fast to iterate.",
   },
   {
-    name: "AI testing",
+    name: "Testing w/ Synthetic Audiences",
     role: "Tone, impact, reach",
-    body: "Everything is written by an exceptional team. Results are tested with AI for tone, impact, and reach — platform by platform.",
+    body: "Everything is written by an exceptional team. Results are tested against synthetic audiences for tone, impact, and reach — platform by platform.",
   },
 ];
 
@@ -152,22 +151,6 @@ export default function AboutMovementsPage() {
             single piece of writing into a category, a community, and a
             pipeline.
           </p>
-        </div>
-      </section>
-
-      {/* VIDEO — Movements in 3 minutes */}
-      <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100">
-        <div className="max-w-5xl mx-auto">
-          <Eyebrow>Movements in 3 minutes</Eyebrow>
-          <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black">
-            <iframe
-              src="https://www.youtube.com/embed/fW8amMCVAJQ?rel=0"
-              title="Movements in 3 minutes"
-              className="absolute inset-0 w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          </div>
         </div>
       </section>
 
@@ -500,42 +483,6 @@ export default function AboutMovementsPage() {
                 </p>
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* WHO'S BEHIND THIS */}
-      <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100 bg-[#fafaf8]">
-        <div className="max-w-5xl mx-auto">
-          <Eyebrow>Who&rsquo;s behind this</Eyebrow>
-          <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-10 mt-2">
-            <Image
-              src="/images/reuben.jpg"
-              alt="Reuben Steiger"
-              width={240}
-              height={240}
-              className="rounded-full object-cover w-28 h-28 md:w-36 md:h-36 border border-zinc-200 flex-shrink-0"
-            />
-            <div className="flex-1">
-              <h2 className="text-4xl md:text-6xl font-black tracking-tight text-zinc-900 leading-[1.02] mb-3">
-                Reuben Steiger.
-              </h2>
-              <p className="text-xl md:text-2xl font-semibold text-zinc-900 mb-4">
-                Entrepreneur <span className="text-zinc-300">||</span>{" "}
-                Movement Builder <span className="text-zinc-300">||</span>{" "}
-                Writer
-              </p>
-              <p className="text-lg md:text-xl text-zinc-600 leading-snug max-w-2xl mb-5">
-                Two decades turning promising ideas into global movements —
-                from Fortune 500 media labs to civic organizing.
-              </p>
-              <Link
-                href="/examples"
-                className="inline-flex items-center text-brand text-sm font-extrabold tracking-wide hover:opacity-70"
-              >
-                See examples →
-              </Link>
-            </div>
           </div>
         </div>
       </section>
