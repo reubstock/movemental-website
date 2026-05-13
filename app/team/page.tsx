@@ -4,11 +4,11 @@ import Eyebrow from "../components/Eyebrow";
 
 const PROOF_POINTS = [
   {
-    name: "TED",
-    src: "/images/ted.svg",
+    name: "Second Life",
+    src: "/images/second-life.svg",
     logoClass: "h-12 md:h-14",
-    body: "Built the editorial machine that turned a private speaker series into the world's premier ideas platform.",
-    metric: "Largest grassroots media company in the world",
+    body: "As the Evangelist for a small virtual world platform, helped architect a story machine that allowed residents to tell their stories as a narrative that attracted millions.",
+    metric: "Millions of residents at peak",
   },
   {
     name: "IPG Media Lab",

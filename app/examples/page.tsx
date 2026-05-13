@@ -15,18 +15,18 @@ type Example = {
 
 const EXAMPLES: Example[] = [
   {
-    slug: "ted",
-    name: "TED",
-    logoSrc: "/images/ted.svg",
+    slug: "second-life",
+    name: "Second Life",
+    logoSrc: "/images/second-life.svg",
     logoClass: "h-14 md:h-16",
-    tag: "Ideas Platform",
+    tag: "Virtual World",
     headline:
-      "Built the editorial machine that turned a private speaker series into the world's premier ideas platform.",
+      "As the Evangelist for a small virtual world platform, helped architect a story machine that allowed residents to tell their stories as a narrative that attracted millions.",
     body: [
-      "We helped TED define a voice, a cadence, and a publishing surface that could scale beyond the conference itself. The result was an editorial operation that put TED Talks at the center of a new global conversation about ideas.",
-      "Same play we run for every client: a category-defining piece of writing, an ongoing publication, and a community organized around the people who carry the story forward.",
+      "Second Life was the first true mass-market virtual world — and the first to answer the question every new platform now faces: how do you make a strange new place feel inevitable? The answer was editorial.",
+      "We built the architecture that turned residents into protagonists: a live world map, a publication of record, and a press machine that broadcast their stories outward. The playbook Movemental still runs began here.",
     ],
-    metric: "Largest grassroots media company in the world",
+    metric: "Millions of residents at peak",
     metricLabel: "Result",
   },
   {
