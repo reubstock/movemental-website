@@ -153,7 +153,7 @@ export default function ExamplesPage() {
             you whether the Open Letter is the right shape for it.
           </p>
           <Link
-            href="/engage"
+            href="/engage#contact"
             className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
           >
             Start a conversation
