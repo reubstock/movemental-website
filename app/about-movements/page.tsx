@@ -82,7 +82,7 @@ const COMMERCIAL_MOVEMENTS = [
     author: "Satoshi Nakamoto",
     title: "Bitcoin: A Peer-to-Peer Electronic Cash System",
     movement: "Bitcoin / Crypto",
-    body: "Nine pages. No founder visible. The white paper became the founding document of a $1T+ asset class — and the template every protocol that followed tried to imitate.",
+    body: "Nine pages. No founder visible. The white paper became the founding document of a $1T+ asset class — and the template of every protocol that followed tried to imitate.",
   },
   {
     year: "2005+",
