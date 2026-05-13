@@ -20,33 +20,25 @@ export default function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative px-5 md:px-8 py-20 md:py-28 border-b border-zinc-100 overflow-hidden">
+      <section className="relative px-5 md:px-8 py-28 md:py-40 lg:py-48 border-b border-zinc-100 overflow-hidden">
         <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(60% 60% at 80% 0%, rgba(0,182,240,0.07) 0%, transparent 60%), radial-gradient(50% 50% at 0% 80%, rgba(93,208,245,0.05) 0%, transparent 60%)",
+              "radial-gradient(55% 55% at 85% 10%, rgba(0,182,240,0.10) 0%, transparent 60%), radial-gradient(45% 45% at 5% 90%, rgba(93,208,245,0.07) 0%, transparent 60%)",
           }}
         />
         <div className="relative max-w-6xl mx-auto">
-          <Image
-            src="/images/movemental.svg"
-            alt=""
-            width={104}
-            height={104}
-            className="w-20 h-20 md:w-24 md:h-24 mb-8 drop-shadow-[0_10px_30px_rgba(0,182,240,0.18)]"
-            priority
-          />
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-tint border border-[#a8dcf5] text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-tint border border-[#a8dcf5] text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-brand" />
             Movement, not marketing
           </div>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight text-zinc-900 mb-7 max-w-[16ch]">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight text-zinc-900 mb-8 max-w-[16ch]">
             We turn promising ideas into{" "}
             <span className="text-brand">global movements.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl mb-8">
+          <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl mb-10">
             Movemental builds the editorial machine that carries a
             category-defining idea into the world — and the community that
             keeps it alive once it lands.
