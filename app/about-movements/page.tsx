@@ -131,6 +131,22 @@ export default function AboutMovementsPage() {
         </div>
       </section>
 
+      {/* VIDEO — Movements in 3 minutes */}
+      <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100">
+        <div className="max-w-5xl mx-auto">
+          <Eyebrow>Movements in 3 minutes</Eyebrow>
+          <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black">
+            <iframe
+              src="https://www.youtube.com/embed/fW8amMCVAJQ?start=14&rel=0"
+              title="Movements in 3 minutes"
+              className="absolute inset-0 w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </section>
+
       {/* OFFER PRINCIPLES */}
       <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100 bg-[#fafaf8]">
         <div className="max-w-6xl mx-auto">
