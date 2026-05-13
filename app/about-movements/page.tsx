@@ -438,8 +438,7 @@ export default function AboutMovementsPage() {
             Have an idea worth turning into a movement?
           </h2>
           <p className="text-lg text-white/70 leading-relaxed mb-8">
-            A typical first engagement runs six months. Work for Hire,
-            flexible terms.
+            A typical first engagement runs six months.
           </p>
           <Link
             href="/engage"

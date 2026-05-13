@@ -7,11 +7,6 @@ const TERMS = [
     sub: "Single phase, with options to extend",
   },
   {
-    label: "Structure",
-    value: "Work for Hire",
-    sub: "Flexible terms",
-  },
-  {
     label: "Cadence",
     value: "Weekly",
     sub: "Standing calls and check-ins throughout",
@@ -38,7 +33,7 @@ export default function EngagePage() {
         <div className="max-w-5xl mx-auto">
           <Eyebrow>Engage</Eyebrow>
           <h1 className="text-5xl md:text-7xl font-black tracking-tight text-zinc-900 leading-[0.98] mb-7 max-w-[16ch]">
-            A simple Work for Hire.{" "}
+            A simple engagement.{" "}
             <span className="text-brand">A quick start.</span>
           </h1>
           <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl">
@@ -58,7 +53,7 @@ export default function EngagePage() {
             Six months. One phase.{" "}
             <span className="text-brand">Three workstreams in parallel.</span>
           </h2>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-200 border border-zinc-200 rounded-md overflow-hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-zinc-200 border border-zinc-200 rounded-md overflow-hidden">
             {TERMS.map((t) => (
               <div key={t.label} className="bg-white p-6 md:p-7">
                 <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand mb-3">

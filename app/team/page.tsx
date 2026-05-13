@@ -144,8 +144,8 @@ export default function TeamPage() {
             Ready to start?
           </h2>
           <p className="text-lg text-white/70 leading-relaxed mb-8">
-            Work for Hire, flexible terms. Most engagements run six months
-            and start as soon as the contract is signed.
+            Most engagements run six months and start as soon as the
+            contract is signed.
           </p>
           <Link
             href="/engage"
