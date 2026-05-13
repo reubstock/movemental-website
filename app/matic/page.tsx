@@ -1,319 +1,309 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import Eyebrow from "../components/Eyebrow";
 
-type Ingredient = {
+type Question = {
   n: string;
-  key: string;
-  title: string;
-  body: string;
+  key: "change" | "unsaid" | "why" | "ask";
   prompt: string;
   placeholder: string;
 };
 
-const INGREDIENTS: Ingredient[] = [
+const QUESTIONS: Question[] = [
   {
     n: "01",
-    key: "grievance",
-    title: "Latent grievance or aspiration",
-    body: "You can't manufacture a movement, only catalyze one that's already smoldering. People have to feel something — injustice, pain, longing — that hasn't been named. Your job is to name it.",
-    prompt: "What is the unspoken feeling your movement names?",
-    placeholder:
-      "The thing everyone in your field already feels but won't say out loud…",
+    key: "change",
+    prompt: "What would you like to change?",
+    placeholder: "Name what's wrong, missing, or stuck.",
   },
   {
     n: "02",
-    key: "us",
-    title: `A clear "us."`,
-    body: `Movements run on identity more than ideology. "I'm an alcoholic," "I'm a worker," "I'm a mother who lost a child to a drunk driver." Belonging usually precedes belief — get people to feel like part of a "we" and the rest follows.`,
-    prompt: `Who is the "we" your movement creates?`,
-    placeholder:
-      "The identity members claim out loud. The sentence that begins 'I'm a…'",
+    key: "unsaid",
+    prompt: "What does everyone think but won't say?",
+    placeholder: "The unspoken truth at the center of the field.",
   },
   {
     n: "03",
-    key: "story",
-    title: "A simple, sticky story",
-    body: "Marshall Ganz calls it the story of self, the story of us, the story of now: what happened to me, why we share it, why we have to act today. If you can't tell it in thirty seconds, it isn't ready.",
-    prompt: "Tell the 30-second story: what happened, why we share it, why now.",
-    placeholder: "Self → Us → Now. Three sentences if you can.",
+    key: "why",
+    prompt: "Why is this yours to say?",
+    placeholder: "Your stakes. Your standing. Your specific credibility.",
   },
   {
     n: "04",
-    key: "first-ask",
-    title: "A low-cost first ask",
-    body: "Wear the pin, come to the meeting, sign the thing. The entry point has to be nearly frictionless. People commit by doing, then rationalize the doing.",
-    prompt: "What's the first, almost-frictionless action a new person can take?",
-    placeholder: "Sign. Subscribe. Show up. Wear it.",
-  },
-  {
-    n: "05",
-    key: "ladder",
-    title: "A ladder of engagement",
-    body: "Once they're in, there has to be somewhere to go — attendee to volunteer to organizer to leader. Movements die when there's no next step.",
-    prompt: "Sketch the path: attendee → volunteer → organizer → leader.",
-    placeholder: "What does the next rung look like at each stage?",
-  },
-  {
-    n: "06",
-    key: "units",
-    title: "Replicable, distributed units",
-    body: "AA chapters, union locals, church small groups, Mormon wards. Small enough that anyone can start one, structured enough that they all feel like the same thing. Centralized movements scale linearly; replicable ones scale exponentially.",
-    prompt:
-      "What's the smallest reproducible unit — and what makes them all feel the same?",
-    placeholder: "The chapter. The cell. The local. The kit anyone can run.",
-  },
-  {
-    n: "07",
-    key: "rituals",
-    title: "Rituals and symbols",
-    body: "Meetings with a predictable shape, songs, chants, dress, shared language. These feel cosmetic and they're not — they're the glue.",
-    prompt: "List the rituals, symbols, language, or signals members share.",
-    placeholder: "Greetings. Colors. Gestures. Jargon. Meeting cadence.",
-  },
-  {
-    n: "08",
-    key: "adversary",
-    title: "An adversary, real or symbolic",
-    body: "Could be a person, a system, a disease, a status quo. Something to push against.",
-    prompt: "What — or who — are you pushing against?",
-    placeholder:
-      "The thing the movement defines itself in opposition to.",
-  },
-  {
-    n: "09",
-    key: "wins",
-    title: "Visible wins",
-    body: "Even tiny ones. Momentum is a feeling before it's a fact.",
-    prompt: "Name the first small win you can deliver in the first 30 days.",
-    placeholder:
-      "What can you point to and say 'we did that' inside a month?",
+    key: "ask",
+    prompt: "What do you want readers to do?",
+    placeholder: "One specific, immediate, public action.",
   },
 ];
 
+type Status = "idle" | "composing" | "ready" | "error";
+
+const STATUS_META: Record<Status, { dot: string; label: string }> = {
+  idle: { dot: "bg-zinc-400", label: "IDLE" },
+  composing: { dot: "bg-brand animate-pulse", label: "COMPOSING" },
+  ready: { dot: "bg-green-500", label: "READY" },
+  error: { dot: "bg-red-500", label: "ERROR" },
+};
+
 export default function MaticPage() {
-  const [name, setName] = useState("");
   const [values, setValues] = useState<Record<string, string>>({});
+  const [letter, setLetter] = useState("");
+  const [status, setStatus] = useState<Status>("idle");
+  const [elapsed, setElapsed] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
 
   const update = (key: string, v: string) =>
-    setValues((prev) => ({ ...prev, [key]: v }));
+    setValues((p) => ({ ...p, [key]: v }));
 
-  const reset = () => {
-    setName("");
-    setValues({});
+  const filled = QUESTIONS.filter((q) => values[q.key]?.trim()).length;
+  const canRun = filled >= 1 && status !== "composing";
+  const wordCount = letter.trim() ? letter.trim().split(/\s+/).length : 0;
+
+  const run = async () => {
+    if (!canRun) return;
+
+    setLetter("");
+    setStatus("composing");
+    setElapsed(null);
+    const startTime = performance.now();
+
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    try {
+      const res = await fetch("/api/generate-letter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+        signal: controller.signal,
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        setLetter(`[Error: ${text || res.statusText}]`);
+        setStatus("error");
+        return;
+      }
+
+      const reader = res.body!.getReader();
+      const decoder = new TextDecoder();
+      let acc = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        acc += decoder.decode(value, { stream: true });
+        setLetter(acc);
+      }
+
+      setStatus("ready");
+      setElapsed((performance.now() - startTime) / 1000);
+    } catch (e) {
+      if ((e as Error).name !== "AbortError") {
+        const msg = e instanceof Error ? e.message : "request failed";
+        setLetter(`[Error: ${msg}]`);
+        setStatus("error");
+      }
+    }
   };
 
-  const filledCount = INGREDIENTS.filter((i) =>
-    values[i.key]?.trim()
-  ).length;
-  const total = INGREDIENTS.length;
-  const hasContent = name.trim().length > 0 || filledCount > 0;
+  const stop = () => {
+    abortRef.current?.abort();
+    setStatus("ready");
+  };
 
-  const copyKit = async () => {
-    const blocks = INGREDIENTS.map((i) =>
-      [
-        `${i.n}. ${i.title}`,
-        i.prompt,
-        values[i.key]?.trim() || "(blank)",
-      ].join("\n")
-    );
-    const text = [
-      `MOVEMENT: ${name.trim() || "(Unnamed)"}`,
-      "—",
-      "MATIC kit — Movemental",
-      "",
-      ...blocks.map((b) => b + "\n"),
-    ].join("\n");
+  const reset = () => {
+    setValues({});
+    setLetter("");
+    setStatus("idle");
+    setElapsed(null);
+  };
+
+  const copy = async () => {
+    if (!letter) return;
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText(letter);
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
-    } catch (_) {
+    } catch {
       /* ignore */
     }
   };
 
+  const s = STATUS_META[status];
+
   return (
     <>
       {/* HERO */}
-      <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100">
-        <div className="max-w-5xl mx-auto">
-          <Eyebrow>MATIC</Eyebrow>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-zinc-900 leading-[0.98] mb-7 max-w-[18ch]">
-            The movement builder.
-          </h1>
-          <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl mb-6">
-            Nine ingredients. One canvas. Pressure-test a movement before
-            you launch one — or sharpen one that&rsquo;s already smoldering.
-          </p>
-          <Link
-            href="/matic/letter"
-            className="inline-flex items-center text-brand text-sm font-extrabold tracking-wide hover:opacity-70"
-          >
-            Drafting the launch? Try the Open Letter Builder →
-          </Link>
-        </div>
-      </section>
-
-      {/* NAME INPUT */}
-      <section className="px-5 md:px-8 py-12 md:py-16 border-b border-zinc-100 bg-[#fafaf8]">
-        <div className="max-w-5xl mx-auto">
-          <label
-            htmlFor="movement-name"
-            className="block text-[11px] font-extrabold tracking-[0.18em] uppercase text-brand mb-3"
-          >
-            Step 00 · Name your movement
-          </label>
-          <input
-            id="movement-name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="e.g. No Kings"
-            className="w-full bg-white border border-zinc-200 rounded-lg px-5 py-4 text-2xl md:text-4xl font-black tracking-tight text-zinc-900 placeholder:text-zinc-300 focus:outline-none focus:border-brand transition-colors"
-          />
-          <p className="mt-3 text-sm text-zinc-500">
-            A name you can imagine people saying out loud. It can change.
-          </p>
-        </div>
-      </section>
-
-      {/* INGREDIENTS GRID */}
       <section className="px-5 md:px-8 py-16 md:py-20 border-b border-zinc-100">
         <div className="max-w-5xl mx-auto">
-          <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
-            <div>
-              <Eyebrow>The ingredients</Eyebrow>
-              <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05]">
-                Nine to get right.
-              </h2>
-            </div>
-            <div className="text-sm font-bold text-zinc-500">
-              {filledCount}/{total} filled
-            </div>
-          </div>
+          <Eyebrow>MATIC</Eyebrow>
+          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-zinc-900 leading-[0.98] mb-6 max-w-[18ch]">
+            Inputs <span className="text-brand">→</span> Letter.
+          </h1>
+          <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl">
+            Four questions. One short open letter. Under ninety seconds.
+          </p>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {INGREDIENTS.map((i) => {
-              const filled = !!values[i.key]?.trim();
+      {/* INPUTS */}
+      <section className="px-5 md:px-8 py-12 md:py-16 border-b border-zinc-100 bg-[#fafaf8]">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {QUESTIONS.map((q) => {
+              const isFilled = !!values[q.key]?.trim();
               return (
                 <article
-                  key={i.key}
-                  className={`bg-white border rounded-lg p-6 md:p-7 flex flex-col gap-3 transition-colors ${
-                    filled ? "border-brand" : "border-zinc-200"
+                  key={q.key}
+                  className={`bg-white border rounded-lg p-6 flex flex-col gap-3 transition-colors ${
+                    isFilled ? "border-brand" : "border-zinc-200"
                   }`}
                 >
-                  <div className="flex items-baseline justify-between">
-                    <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand">
-                      {i.n}
+                  <div className="flex items-center justify-between">
+                    <div className="text-[10px] font-mono font-bold tracking-[0.18em] text-brand">
+                      INPUT {q.n}
                     </div>
-                    {filled && (
-                      <div className="text-[10px] font-extrabold tracking-[0.16em] uppercase text-brand">
-                        ✓ Filled
-                      </div>
-                    )}
+                    <div
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        isFilled ? "bg-brand" : "bg-zinc-200"
+                      }`}
+                    />
                   </div>
-                  <h3 className="text-xl md:text-2xl font-black text-zinc-900 leading-tight">
-                    {i.title}
-                  </h3>
-                  <p className="text-sm md:text-base text-zinc-600 leading-relaxed">
-                    {i.body}
-                  </p>
                   <label
-                    htmlFor={`input-${i.key}`}
-                    className="text-sm font-bold text-zinc-700 mt-2"
+                    htmlFor={`q-${q.key}`}
+                    className="text-lg md:text-xl font-black text-zinc-900 leading-tight"
                   >
-                    {i.prompt}
+                    {q.prompt}
                   </label>
                   <textarea
-                    id={`input-${i.key}`}
-                    value={values[i.key] ?? ""}
-                    onChange={(e) => update(i.key, e.target.value)}
+                    id={`q-${q.key}`}
+                    value={values[q.key] ?? ""}
+                    onChange={(e) => update(q.key, e.target.value)}
                     rows={3}
-                    placeholder={i.placeholder}
-                    className="w-full bg-white border border-zinc-200 rounded-md px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-300 focus:outline-none focus:border-brand transition-colors resize-y"
+                    placeholder={q.placeholder}
+                    className="w-full bg-white border border-zinc-200 rounded-md px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-300 focus:outline-none focus:border-brand transition-colors resize-y leading-relaxed"
                   />
                 </article>
               );
             })}
           </div>
-        </div>
-      </section>
 
-      {/* KIT SUMMARY */}
-      <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100 bg-[#fafaf8]">
-        <div className="max-w-5xl mx-auto">
-          <Eyebrow>Your kit</Eyebrow>
-          <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] max-w-3xl">
-              {name.trim() || (
-                <span className="text-zinc-300">(Unnamed movement)</span>
-              )}
-            </h2>
-            <div className="flex gap-2">
+          {/* RUN BAR */}
+          <div className="mt-6 flex flex-wrap items-center gap-3">
+            {status !== "composing" ? (
+              <button
+                type="button"
+                onClick={run}
+                disabled={!canRun}
+                className="inline-flex items-center bg-brand hover:bg-[#0091c2] disabled:opacity-40 disabled:cursor-not-allowed text-white px-8 py-4 text-sm font-mono font-bold tracking-[0.18em] rounded transition-colors"
+              >
+                RUN ↵
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={stop}
+                className="inline-flex items-center border-2 border-brand text-brand hover:bg-brand hover:text-white px-8 py-4 text-sm font-mono font-bold tracking-[0.18em] rounded transition-colors"
+              >
+                STOP
+              </button>
+            )}
+            {(letter || filled > 0) && status !== "composing" && (
               <button
                 type="button"
                 onClick={reset}
-                disabled={!hasContent}
-                className="inline-flex items-center border border-zinc-300 hover:border-zinc-900 disabled:opacity-40 disabled:cursor-not-allowed text-zinc-900 px-5 py-3 text-sm font-extrabold tracking-wide rounded transition-colors"
+                className="inline-flex items-center text-zinc-500 hover:text-zinc-900 px-4 py-2 text-xs font-mono font-bold tracking-[0.18em] transition-colors"
               >
-                Reset
+                RESET
               </button>
-              <button
-                type="button"
-                onClick={copyKit}
-                disabled={!hasContent}
-                className="inline-flex items-center bg-brand hover:bg-[#0091c2] disabled:opacity-40 disabled:cursor-not-allowed text-white px-6 py-3 text-sm font-extrabold tracking-wide rounded transition-colors"
-              >
-                {copied ? "Copied ✓" : "Copy kit"}
-              </button>
+            )}
+            <div className="ml-auto flex items-center gap-2 text-[11px] font-mono font-bold tracking-[0.18em] text-zinc-500">
+              <span className={`w-2 h-2 rounded-full ${s.dot}`} />
+              {s.label}
+              {elapsed && status === "ready" && (
+                <span className="text-zinc-400">· {elapsed.toFixed(1)}s</span>
+              )}
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="bg-white border border-zinc-200 rounded-lg divide-y divide-zinc-100">
-            {INGREDIENTS.map((i) => (
-              <div
-                key={i.key}
-                className="px-6 md:px-7 py-5 grid grid-cols-[40px_1fr] gap-4 md:gap-6"
-              >
-                <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand pt-1">
-                  {i.n}
+      {/* OUTPUT */}
+      <section className="px-5 md:px-8 py-16 md:py-20 border-b border-zinc-100">
+        <div className="max-w-5xl mx-auto">
+          <Eyebrow>Output</Eyebrow>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-6">
+            Draft.
+          </h2>
+
+          <article className="bg-white border border-zinc-200 rounded-lg overflow-hidden">
+            <div className="border-b border-zinc-100 px-5 py-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-[10px] font-mono font-bold tracking-[0.18em] text-zinc-500">
+              <span>MODEL: claude-sonnet-4-6</span>
+              <span className="text-zinc-200">|</span>
+              <span>WORDS: {String(wordCount).padStart(3, "0")}</span>
+              <span className="text-zinc-200">|</span>
+              <span className="flex items-center gap-1.5">
+                <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
+                {s.label}
+              </span>
+            </div>
+
+            <div className="px-7 md:px-10 py-8 md:py-10 min-h-[320px]">
+              {letter ? (
+                <div className="font-serif text-zinc-900 text-base md:text-lg leading-[1.65] whitespace-pre-wrap">
+                  {letter}
+                  {status === "composing" && (
+                    <span className="inline-block w-2 h-5 align-middle bg-brand ml-0.5 animate-pulse" />
+                  )}
                 </div>
-                <div>
-                  <div className="text-sm md:text-base font-bold text-zinc-900 mb-1">
-                    {i.title}
-                  </div>
-                  <div className="text-sm md:text-base text-zinc-600 leading-relaxed whitespace-pre-wrap">
-                    {values[i.key]?.trim() || (
-                      <span className="text-zinc-300 italic">
-                        Not yet filled.
-                      </span>
-                    )}
-                  </div>
+              ) : (
+                <div className="text-sm font-mono text-zinc-300">
+                  // Awaiting RUN command.
                 </div>
+              )}
+            </div>
+
+            {letter && status !== "composing" && (
+              <div className="border-t border-zinc-100 px-5 py-3 flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={copy}
+                  className="inline-flex items-center bg-zinc-900 hover:bg-brand text-white px-4 py-2 text-xs font-mono font-bold tracking-[0.18em] rounded transition-colors"
+                >
+                  {copied ? "COPIED ✓" : "COPY"}
+                </button>
+                <button
+                  type="button"
+                  onClick={run}
+                  disabled={!canRun}
+                  className="inline-flex items-center border border-zinc-300 hover:border-zinc-900 text-zinc-900 disabled:opacity-40 px-4 py-2 text-xs font-mono font-bold tracking-[0.18em] rounded transition-colors"
+                >
+                  REGENERATE
+                </button>
               </div>
-            ))}
-          </div>
+            )}
+          </article>
 
-          <p className="mt-6 text-sm text-zinc-500">
-            Nothing is saved server-side. Copy your kit to keep it.
+          <p className="mt-4 text-xs text-zinc-400 font-mono">
+            // Inputs are sent to Anthropic for generation only. Nothing is
+            saved.
           </p>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="px-5 md:px-8 py-20 md:py-24 bg-[#0f0f10] text-white">
+      <section className="px-5 md:px-8 py-16 md:py-20 bg-[#0f0f10] text-white">
         <div className="max-w-3xl mx-auto text-center">
           <Eyebrow className="text-[#5dd0f5]">Engage</Eyebrow>
           <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.05] mb-5">
-            Built something worth pursuing?
+            Want this letter actually published?
           </h2>
           <p className="text-lg text-white/70 leading-relaxed mb-8">
-            Bring us your kit. We&rsquo;ll tell you whether the Open Letter
-            is the right next move — and what the first ninety days look like.
+            Bring us the draft. We&rsquo;ll sharpen it, line up the
+            endorsers, and run the public + private launch.
           </p>
           <Link
             href="/engage#contact"
