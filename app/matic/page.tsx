@@ -145,6 +145,32 @@ export default function MaticPage() {
     }
   };
 
+  const shareUrl = () =>
+    typeof window !== "undefined"
+      ? `${window.location.origin}/matic`
+      : "https://movemental-website.vercel.app/matic";
+
+  const shareToTwitter = () => {
+    if (!letter) return;
+    const trimmed = letter.trim();
+    const snippet =
+      trimmed.length > 220
+        ? trimmed.slice(0, 220).replace(/\s+\S*$/, "") + "…"
+        : trimmed;
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      snippet
+    )}&url=${encodeURIComponent(shareUrl())}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  const shareToFacebook = () => {
+    if (!letter) return;
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      shareUrl()
+    )}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   const s = STATUS_META[status];
 
   return (
@@ -337,6 +363,40 @@ export default function MaticPage() {
                   className="inline-flex items-center bg-zinc-900 hover:bg-brand text-white px-4 py-2 text-xs font-mono font-bold tracking-[0.18em] rounded transition-colors"
                 >
                   {copied ? "COPIED ✓" : "COPY"}
+                </button>
+                <button
+                  type="button"
+                  onClick={shareToTwitter}
+                  aria-label="Share to Twitter"
+                  title="Share to Twitter"
+                  className="inline-flex items-center justify-center w-9 h-9 border border-zinc-300 hover:border-zinc-900 hover:bg-zinc-900 hover:text-white text-zinc-700 rounded transition-colors"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="13"
+                    height="13"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231L18.244 2.25Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  onClick={shareToFacebook}
+                  aria-label="Share to Facebook"
+                  title="Share to Facebook"
+                  className="inline-flex items-center justify-center w-9 h-9 border border-zinc-300 hover:border-zinc-900 hover:bg-zinc-900 hover:text-white text-zinc-700 rounded transition-colors"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M13.5 21.5v-8.01h2.7l.4-3.13h-3.1V8.36c0-.9.25-1.52 1.55-1.52H17V4.04c-.29-.04-1.26-.12-2.39-.12-2.37 0-3.99 1.45-3.99 4.1v2.34H8v3.13h2.62V21.5h2.88Z" />
+                  </svg>
                 </button>
                 <button
                   type="button"
