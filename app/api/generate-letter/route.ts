@@ -40,7 +40,7 @@ type Body = {
 };
 
 export async function POST(req: Request) {
-  const apiKey = process.env.ANTHROPIC_API_KEY || process.env.REUBENKEY;
+  const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     return new Response(
       "ANTHROPIC_API_KEY is not configured on the server.",
