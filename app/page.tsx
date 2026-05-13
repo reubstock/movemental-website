@@ -95,7 +95,7 @@ export default function HomePage() {
                 Step 02
               </div>
               <div className="text-lg font-black text-zinc-900 mb-1">
-                Casting the Drama
+                Cast the Drama
               </div>
               <p className="text-sm text-zinc-600">
                 The personalities, founders, and dissenters who carry the story.

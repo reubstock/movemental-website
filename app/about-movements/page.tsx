@@ -396,7 +396,7 @@ export default function AboutMovementsPage() {
               },
               {
                 n: "02",
-                title: "Casting the Drama.",
+                title: "Cast the Drama.",
                 body: "Personalities, founders, builders, dissenters. The anthropologist's posture: surface them, co-create the mythology, broadcast outward.",
               },
               {
