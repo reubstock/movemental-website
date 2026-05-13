@@ -17,7 +17,7 @@ const EXAMPLES: Example[] = [
   {
     slug: "second-life",
     name: "Second Life",
-    logoSrc: "/images/second-life.svg",
+    logoSrc: "/images/second-life-logo.png",
     logoClass: "h-14 md:h-16",
     tag: "Virtual World",
     headline:

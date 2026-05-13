@@ -3,7 +3,7 @@ import Link from "next/link";
 import Eyebrow from "./components/Eyebrow";
 
 const EXAMPLE_LOGOS = [
-  { name: "Second Life", src: "/images/second-life.svg", widthClass: "h-10 md:h-12" },
+  { name: "Second Life", src: "/images/second-life-logo.png", widthClass: "h-10 md:h-12" },
   {
     name: "IPG Media Lab",
     src: "/images/ipg.svg",
