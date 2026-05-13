@@ -71,7 +71,7 @@ export default function HomePage() {
             Most of our engagements start the same way: a single,
             category-defining <strong className="text-zinc-900">Open Letter</strong>,
             published from a client&rsquo;s leadership, that frames the world
-            they want to build. The letter is the keystone.{" "}
+            they want to build. The letter is the anthem.{" "}
             <span className="text-brand font-semibold">
               Everything else amplifies it.
             </span>
@@ -93,10 +93,10 @@ export default function HomePage() {
                 Step 02
               </div>
               <div className="text-lg font-black text-zinc-900 mb-1">
-                Feature Interesting People
+                Casting the Drama
               </div>
               <p className="text-sm text-zinc-600">
-                The residents, founders, and dissenters who carry the story.
+                The personalities, founders, and dissenters who carry the story.
               </p>
             </div>
             <div className="bg-white p-6">

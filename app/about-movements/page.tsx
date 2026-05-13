@@ -144,7 +144,7 @@ export default function AboutMovementsPage() {
             will publish that year.
           </p>
           <p className="text-lg md:text-xl text-zinc-700 leading-snug max-w-3xl mt-5">
-            The letter is the keystone.{" "}
+            The letter is the anthem.{" "}
             <span className="text-brand font-semibold">
               Everything else amplifies it.
             </span>{" "}
@@ -413,8 +413,8 @@ export default function AboutMovementsPage() {
               },
               {
                 n: "02",
-                title: "Feature Interesting People.",
-                body: "Residents, founders, builders, dissenters. The anthropologist's posture: surface them, co-create the mythology, broadcast outward.",
+                title: "Casting the Drama.",
+                body: "Personalities, founders, builders, dissenters. The anthropologist's posture: surface them, co-create the mythology, broadcast outward.",
               },
               {
                 n: "03",

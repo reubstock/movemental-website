@@ -14,7 +14,7 @@ VOICE
 STRUCTURE (mandatory; exactly five short paragraphs, in this order, no labels):
 1. HOOK — present-tense danger, loss, or stuck condition. 2-3 sentences.
 2. DIAGNOSIS — why the obvious players can't fix it. 2-3 sentences.
-3. JERRY MAGUIRE — say out loud the thing everyone thinks but won't. 2-3 sentences. This is the keystone of the letter.
+3. JERRY MAGUIRE — say out loud the thing everyone thinks but won't. 2-3 sentences. This is the anthem of the letter.
 4. FUTURE — what becomes possible, and why this falls to the author (their stakes, standing, credibility). 2-3 sentences.
 5. CALL — one specific, immediate, measurable ask. 1-2 sentences.
 
