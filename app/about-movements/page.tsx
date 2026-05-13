@@ -497,12 +497,12 @@ export default function AboutMovementsPage() {
           <p className="text-lg text-white/70 leading-relaxed mb-8">
             A typical first engagement runs six months.
           </p>
-          <Link
-            href="/engage"
+          <a
+            href="mailto:reubstock@gmail.com"
             className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
           >
             Get in touch
-          </Link>
+          </a>
         </div>
       </section>
     </>

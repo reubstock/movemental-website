@@ -8,7 +8,7 @@ import { useState } from "react";
 const LINKS = [
   { href: "/about-movements", label: "About Movements" },
   { href: "/examples", label: "Examples" },
-  { href: "/matic", label: "MATIC" },
+  { href: "/matic", label: "TOOLS" },
   { href: "/engage", label: "Engage" },
 ];
 
@@ -56,12 +56,12 @@ export default function Nav() {
           })}
         </nav>
 
-        <Link
-          href="/engage"
+        <a
+          href="mailto:reubstock@gmail.com"
           className="hidden md:inline-flex items-center bg-zinc-900 hover:bg-brand text-white text-xs font-extrabold tracking-wide uppercase px-4 py-2 rounded-full ml-auto transition-colors"
         >
           Get in touch
-        </Link>
+        </a>
 
         <button
           type="button"

@@ -428,12 +428,12 @@ export default function MaticPage() {
             Bring us the draft. We&rsquo;ll sharpen it, line up the
             endorsers, and run the public + private launch.
           </p>
-          <Link
-            href="/engage#contact"
+          <a
+            href="mailto:reubstock@gmail.com"
             className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
           >
             Get in touch
-          </Link>
+          </a>
         </div>
       </section>
     </>
