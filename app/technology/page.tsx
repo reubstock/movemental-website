@@ -24,9 +24,9 @@ const STACK: Platform[] = [
     body: "For specific campaigns we ship a one-page site — like this one — that puts a single ask in front of a defined audience. Built in days, not weeks. Owned, indexable, fast to iterate.",
   },
   {
-    name: "AI in the loop",
-    role: "The writing room",
-    body: "Claude and similar tools do real work in the drafting process — research, sharpening, variation. The thinking is human. The drudgery isn't. Every artifact still ships under a named editor.",
+    name: "AI testing",
+    role: "Tone, impact, reach",
+    body: "Everything is written by an exceptional team. Results are tested with AI for tone, impact, and reach — platform by platform.",
   },
 ];
 
