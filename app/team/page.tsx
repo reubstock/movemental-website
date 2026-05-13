@@ -121,7 +121,7 @@ export default function TeamPage() {
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row gap-3">
           <a
             href="mailto:reubstock@gmail.com"
-            className="inline-flex items-center bg-brand hover:bg-[#d33e15] text-white px-7 py-3 text-base font-extrabold tracking-wide rounded transition-colors"
+            className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3 text-base font-extrabold tracking-wide rounded transition-colors"
           >
             reubstock@gmail.com
           </a>
@@ -139,7 +139,7 @@ export default function TeamPage() {
       {/* CTA */}
       <section className="px-5 md:px-8 py-20 md:py-24 bg-[#0f0f10] text-white">
         <div className="max-w-3xl mx-auto text-center">
-          <Eyebrow className="text-[#FF8B4D]">Engage</Eyebrow>
+          <Eyebrow className="text-[#5dd0f5]">Engage</Eyebrow>
           <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.05] mb-5">
             Ready to start?
           </h2>
@@ -149,7 +149,7 @@ export default function TeamPage() {
           </p>
           <Link
             href="/engage"
-            className="inline-flex items-center bg-brand hover:bg-[#d33e15] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
+            className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
           >
             Get in touch
           </Link>

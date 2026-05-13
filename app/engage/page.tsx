@@ -95,7 +95,7 @@ export default function EngagePage() {
       {/* CONTACT CTA */}
       <section className="px-5 md:px-8 py-24 md:py-28 bg-[#0f0f10] text-white">
         <div className="max-w-3xl mx-auto text-center">
-          <Eyebrow className="text-[#FF8B4D]">Get in touch</Eyebrow>
+          <Eyebrow className="text-[#5dd0f5]">Get in touch</Eyebrow>
           <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-[1.02] mb-6">
             Tell us what you&rsquo;re trying to build.
           </h2>
@@ -106,7 +106,7 @@ export default function EngagePage() {
           <div className="flex flex-wrap gap-3 justify-center">
             <a
               href="mailto:reubstock@gmail.com?subject=Movemental%20—%20New%20Engagement"
-              className="inline-flex items-center bg-brand hover:bg-[#d33e15] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
+              className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
             >
               reubstock@gmail.com
             </a>

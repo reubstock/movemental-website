@@ -26,7 +26,7 @@ export default function HomePage() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(60% 60% at 80% 0%, rgba(233,75,30,0.07) 0%, transparent 60%), radial-gradient(50% 50% at 0% 80%, rgba(255,139,77,0.05) 0%, transparent 60%)",
+              "radial-gradient(60% 60% at 80% 0%, rgba(0,182,240,0.07) 0%, transparent 60%), radial-gradient(50% 50% at 0% 80%, rgba(93,208,245,0.05) 0%, transparent 60%)",
           }}
         />
         <div className="relative max-w-6xl mx-auto">
@@ -35,10 +35,10 @@ export default function HomePage() {
             alt=""
             width={104}
             height={104}
-            className="w-20 h-20 md:w-24 md:h-24 mb-8 drop-shadow-[0_10px_30px_rgba(233,75,30,0.18)]"
+            className="w-20 h-20 md:w-24 md:h-24 mb-8 drop-shadow-[0_10px_30px_rgba(0,182,240,0.18)]"
             priority
           />
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-tint border border-[#f8d2bd] text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-tint border border-[#a8dcf5] text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-brand" />
             Movement, not marketing
           </div>
@@ -54,7 +54,7 @@ export default function HomePage() {
           <div className="flex flex-wrap gap-3">
             <Link
               href="/about-movements"
-              className="inline-flex items-center bg-brand hover:bg-[#d33e15] text-white px-6 py-3 text-sm font-extrabold tracking-wide rounded transition-colors shadow-[0_8px_22px_rgba(233,75,30,0.25)]"
+              className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-6 py-3 text-sm font-extrabold tracking-wide rounded transition-colors shadow-[0_8px_22px_rgba(0,182,240,0.25)]"
             >
               How we work →
             </Link>
@@ -210,7 +210,7 @@ export default function HomePage() {
       {/* ENGAGE — CTA */}
       <section className="px-5 md:px-8 py-24 md:py-28 bg-[#0f0f10] text-white">
         <div className="max-w-3xl mx-auto text-center">
-          <Eyebrow className="text-[#FF8B4D]">Engage</Eyebrow>
+          <Eyebrow className="text-[#5dd0f5]">Engage</Eyebrow>
           <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.05] mb-5">
             Have an idea worth turning into a movement?
           </h2>
@@ -222,7 +222,7 @@ export default function HomePage() {
           <div className="flex flex-wrap gap-3 justify-center">
             <Link
               href="/engage"
-              className="inline-flex items-center bg-brand hover:bg-[#d33e15] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
+              className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
             >
               Get in touch
             </Link>
