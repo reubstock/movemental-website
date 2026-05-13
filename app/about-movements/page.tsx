@@ -275,46 +275,15 @@ export default function AboutMovementsPage() {
         <div className="max-w-6xl mx-auto">
           <Eyebrow>Distribution</Eyebrow>
           <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-6 max-w-3xl">
-            Public to many.{" "}
-            <span className="text-brand">Private to the few.</span>
+            Private to the few.{" "}
+            <span className="text-brand">Public to many.</span>
           </h2>
           <p className="text-lg md:text-xl text-zinc-600 leading-relaxed max-w-3xl mb-12">
-            Two motions, run in parallel. One creates volume. The other
-            creates legitimacy. Together, they decide whether the letter is
+            Two motions, run in parallel. One creates legitimacy. The other
+            creates volume. Together, they decide whether the letter is
             read as a press release or as a movement.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-zinc-200 border border-zinc-200 rounded-md overflow-hidden">
-            <article className="bg-white p-7 md:p-8">
-              <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand mb-4">
-                Public motion
-              </div>
-              <h3 className="text-2xl font-black text-zinc-900 mb-3">
-                LinkedIn primary launch
-              </h3>
-              <p className="text-base text-zinc-600 leading-relaxed mb-5">
-                Published from leadership and partner channels. Targeted
-                amplification to the audiences who matter — across
-                LinkedIn, email, and industry newsletters. Designed to
-                perform on the platforms where decision-makers already are.
-              </p>
-              <ul className="border-t border-zinc-100 pt-3">
-                {[
-                  "LinkedIn (founder + organization page)",
-                  "Email distribution to the existing ecosystem",
-                  "Industry & sector newsletters",
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="py-2 pl-6 relative text-sm md:text-base text-zinc-700"
-                  >
-                    <span className="absolute left-0 top-2 text-brand font-black">
-                      →
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </article>
             <article className="bg-white p-7 md:p-8">
               <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand mb-4">
                 Private motion
@@ -334,6 +303,37 @@ export default function AboutMovementsPage() {
                   "Institutional leaders & academics",
                   "Policymakers & commentators",
                   "Trusted voices with audience overlap",
+                ].map((item) => (
+                  <li
+                    key={item}
+                    className="py-2 pl-6 relative text-sm md:text-base text-zinc-700"
+                  >
+                    <span className="absolute left-0 top-2 text-brand font-black">
+                      →
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </article>
+            <article className="bg-white p-7 md:p-8">
+              <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand mb-4">
+                Public motion
+              </div>
+              <h3 className="text-2xl font-black text-zinc-900 mb-3">
+                LinkedIn primary launch
+              </h3>
+              <p className="text-base text-zinc-600 leading-relaxed mb-5">
+                Published from leadership and partner channels. Targeted
+                amplification to the audiences who matter — across
+                LinkedIn, email, and industry newsletters. Designed to
+                perform on the platforms where decision-makers already are.
+              </p>
+              <ul className="border-t border-zinc-100 pt-3">
+                {[
+                  "LinkedIn (founder + organization page)",
+                  "Email distribution to the existing ecosystem",
+                  "Industry & sector newsletters",
                 ].map((item) => (
                   <li
                     key={item}
