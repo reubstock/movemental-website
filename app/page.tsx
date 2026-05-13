@@ -173,42 +173,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* TEAM — teaser */}
-      <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100">
-        <div className="max-w-6xl mx-auto">
-          <Eyebrow>Team</Eyebrow>
-          <div className="flex flex-col md:flex-row md:items-center gap-8">
-            <Image
-              src="/images/reuben.jpg"
-              alt="Reuben Steiger"
-              width={160}
-              height={160}
-              className="rounded-full object-cover w-28 h-28 md:w-36 md:h-36 border border-zinc-200 flex-shrink-0"
-            />
-            <div className="flex-1">
-              <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-3">
-                Reuben Steiger.
-              </h2>
-              <p className="text-xl md:text-2xl font-semibold text-zinc-900 mb-3">
-                Entrepreneur <span className="text-zinc-300">||</span>{" "}
-                Movement Builder <span className="text-zinc-300">||</span>{" "}
-                Writer
-              </p>
-              <p className="text-lg md:text-xl text-zinc-600 leading-snug max-w-2xl mb-5">
-                Two decades turning promising ideas into global movements —
-                from Fortune 500 media labs to civic organizing.
-              </p>
-              <Link
-                href="/team"
-                className="inline-flex items-center text-brand text-sm font-extrabold tracking-wide hover:opacity-70"
-              >
-                More on the team →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ENGAGE — CTA */}
       <section className="px-5 md:px-8 py-24 md:py-28 bg-[#0f0f10] text-white">
         <div className="max-w-3xl mx-auto text-center">

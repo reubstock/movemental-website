@@ -1,5 +1,29 @@
+import Image from "next/image";
 import Link from "next/link";
 import Eyebrow from "../components/Eyebrow";
+
+const STACK = [
+  {
+    name: "LinkedIn",
+    role: "Public launch",
+    body: "The Open Letter goes live here first. Decision-makers, journalists, and policymakers are already on it. We optimize for the comment thread as much as the impressions — the early community self-organizes in public.",
+  },
+  {
+    name: "Substack",
+    role: "The publication",
+    body: "The right home for a story machine in 2026. Native email, threaded commenting, live video, and a subscription model that creates legitimacy. One surface holds the publication, the founding subscriber list, and the recurring video segment.",
+  },
+  {
+    name: "Next.js + Vercel",
+    role: "Custom on-ramps",
+    body: "For specific campaigns we ship a one-page site — like this one — that puts a single ask in front of a defined audience. Built in days, not weeks. Owned, indexable, fast to iterate.",
+  },
+  {
+    name: "AI testing",
+    role: "Tone, impact, reach",
+    body: "Everything is written by an exceptional team. Results are tested with AI for tone, impact, and reach — platform by platform.",
+  },
+];
 
 const OFFER_PRINCIPLES = [
   {
@@ -442,6 +466,76 @@ export default function AboutMovementsPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* THE STACK */}
+      <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100">
+        <div className="max-w-6xl mx-auto">
+          <Eyebrow>The stack</Eyebrow>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-6 max-w-3xl">
+            Off-the-shelf platforms.{" "}
+            <span className="text-brand">Used deliberately.</span>
+          </h2>
+          <p className="text-lg md:text-xl text-zinc-600 leading-relaxed max-w-3xl mb-12">
+            Every movement we&rsquo;ve helped build runs on a small,
+            deliberate stack. No custom CMS, no bespoke software, no
+            platform play. The leverage is editorial — not technical.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-zinc-200 border border-zinc-200 rounded-md overflow-hidden">
+            {STACK.map((p) => (
+              <article
+                key={p.name}
+                className="bg-white p-7 md:p-9 flex flex-col gap-3 min-h-[200px]"
+              >
+                <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand">
+                  {p.role}
+                </div>
+                <h3 className="text-2xl md:text-3xl font-black text-zinc-900 leading-tight">
+                  {p.name}
+                </h3>
+                <p className="text-base text-zinc-600 leading-relaxed mt-1">
+                  {p.body}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHO'S BEHIND THIS */}
+      <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100 bg-[#fafaf8]">
+        <div className="max-w-5xl mx-auto">
+          <Eyebrow>Who&rsquo;s behind this</Eyebrow>
+          <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-10 mt-2">
+            <Image
+              src="/images/reuben.jpg"
+              alt="Reuben Steiger"
+              width={240}
+              height={240}
+              className="rounded-full object-cover w-28 h-28 md:w-36 md:h-36 border border-zinc-200 flex-shrink-0"
+            />
+            <div className="flex-1">
+              <h2 className="text-4xl md:text-6xl font-black tracking-tight text-zinc-900 leading-[1.02] mb-3">
+                Reuben Steiger.
+              </h2>
+              <p className="text-xl md:text-2xl font-semibold text-zinc-900 mb-4">
+                Entrepreneur <span className="text-zinc-300">||</span>{" "}
+                Movement Builder <span className="text-zinc-300">||</span>{" "}
+                Writer
+              </p>
+              <p className="text-lg md:text-xl text-zinc-600 leading-snug max-w-2xl mb-5">
+                Two decades turning promising ideas into global movements —
+                from Fortune 500 media labs to civic organizing.
+              </p>
+              <Link
+                href="/examples"
+                className="inline-flex items-center text-brand text-sm font-extrabold tracking-wide hover:opacity-70"
+              >
+                See examples →
+              </Link>
+            </div>
           </div>
         </div>
       </section>

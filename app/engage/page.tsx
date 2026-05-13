@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Eyebrow from "../components/Eyebrow";
 
 const TERMS = [
@@ -89,6 +90,36 @@ export default function EngagePage() {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* WHO YOU'D BE WORKING WITH */}
+      <section className="px-5 md:px-8 py-16 md:py-20 border-b border-zinc-100 bg-[#fafaf8]">
+        <div className="max-w-5xl mx-auto">
+          <Eyebrow>Who you&rsquo;d be working with</Eyebrow>
+          <div className="flex flex-col sm:flex-row items-start gap-5 sm:gap-8 mt-4">
+            <Image
+              src="/images/reuben.jpg"
+              alt="Reuben Steiger"
+              width={144}
+              height={144}
+              className="rounded-full object-cover w-24 h-24 sm:w-28 sm:h-28 border border-zinc-200 flex-shrink-0"
+            />
+            <div className="flex-1">
+              <div className="text-3xl md:text-4xl font-black tracking-tight text-zinc-900 leading-tight mb-2">
+                Reuben Steiger
+              </div>
+              <p className="text-lg md:text-xl font-semibold text-zinc-900 mb-3">
+                Entrepreneur <span className="text-zinc-300">||</span>{" "}
+                Movement Builder <span className="text-zinc-300">||</span>{" "}
+                Writer
+              </p>
+              <p className="text-base md:text-lg text-zinc-600 leading-relaxed max-w-2xl">
+                Two decades turning promising ideas into global movements —
+                from Fortune 500 media labs to civic organizing.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
