@@ -145,10 +145,16 @@ export default function MaticPage() {
           <h1 className="text-5xl md:text-7xl font-black tracking-tight text-zinc-900 leading-[0.98] mb-7 max-w-[18ch]">
             The movement builder.
           </h1>
-          <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl">
+          <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl mb-6">
             Nine ingredients. One canvas. Pressure-test a movement before
             you launch one — or sharpen one that&rsquo;s already smoldering.
           </p>
+          <Link
+            href="/matic/letter"
+            className="inline-flex items-center text-brand text-sm font-extrabold tracking-wide hover:opacity-70"
+          >
+            Drafting the launch? Try the Open Letter Builder →
+          </Link>
         </div>
       </section>
 
