@@ -348,7 +348,7 @@ export default function MaticPage() {
 
             <div className="px-7 md:px-10 py-8 md:py-10 min-h-[320px]">
               {letter ? (
-                <div className="font-serif text-zinc-900 text-base md:text-lg leading-[1.65] whitespace-pre-wrap">
+                <div className="text-zinc-900 text-[15px] md:text-base leading-[1.55] whitespace-pre-wrap max-w-[640px] mx-auto">
                   {letter}
                   {status === "composing" && (
                     <span className="inline-block w-2 h-5 align-middle bg-brand ml-0.5 animate-pulse" />
