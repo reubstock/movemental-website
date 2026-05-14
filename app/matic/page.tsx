@@ -17,7 +17,7 @@ const INDUSTRIES = [
 
 type Question = {
   n: string;
-  key: "change" | "unsaid" | "why" | "ask";
+  key: "change" | "moment" | "unsaid" | "why" | "ask";
   prompt: string;
   placeholder: string;
 };
@@ -31,18 +31,24 @@ const QUESTIONS: Question[] = [
   },
   {
     n: "02",
+    key: "moment",
+    prompt: "What's a specific moment that made you realize this?",
+    placeholder: "A meeting, a conversation, a line in a report — the scene that crystallized it.",
+  },
+  {
+    n: "03",
     key: "unsaid",
     prompt: "What does everyone think but won't say?",
     placeholder: "The unspoken truth at the center of the field.",
   },
   {
-    n: "03",
+    n: "04",
     key: "why",
     prompt: "Why is this yours to say?",
     placeholder: "Your stakes. Your standing. Your specific credibility.",
   },
   {
-    n: "04",
+    n: "05",
     key: "ask",
     prompt: "What do you want readers to do?",
     placeholder: "One specific, immediate, public action.",

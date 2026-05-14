@@ -33,6 +33,7 @@ If an input is empty or weak, infer from the others. Never refuse.`;
 type Body = {
   industry?: string;
   change?: string;
+  moment?: string;
   unsaid?: string;
   why?: string;
   ask?: string;
@@ -57,12 +58,13 @@ export async function POST(req: Request) {
 
   const industry = body.industry?.trim() ?? "";
   const change = body.change?.trim() ?? "";
+  const moment = body.moment?.trim() ?? "";
   const unsaid = body.unsaid?.trim() ?? "";
   const why = body.why?.trim() ?? "";
   const ask = body.ask?.trim() ?? "";
   const audience = body.audience?.trim() ?? "";
 
-  if (!change && !unsaid && !why && !ask) {
+  if (!change && !moment && !unsaid && !why && !ask) {
     return new Response("Please fill in at least one input.", { status: 400 });
   }
 
@@ -71,6 +73,7 @@ export async function POST(req: Request) {
     "",
     industry ? `Industry: ${industry}` : "",
     `What I want to change: ${change || "(not specified)"}`,
+    `A specific moment that crystallized this: ${moment || "(not specified)"}`,
     `The unspoken truth: ${unsaid || "(not specified)"}`,
     `Why this is mine to say: ${why || "(not specified)"}`,
     `What I want readers to do: ${ask || "(not specified)"}`,
@@ -78,6 +81,9 @@ export async function POST(req: Request) {
     "",
     industry
       ? `Ground the letter in ${industry}: use that field's vocabulary, name its actual players or recent shifts where it strengthens the case, and write as if a reader inside that industry will recognize themselves immediately. Do not name the industry as a label.`
+      : "",
+    moment
+      ? "If a specific moment is provided, open Beat 1 (the Hook) with that scene — a concrete detail, in the present tense — before pulling out to the larger claim. Letters with a real moment outperform abstract ones; lean on it."
       : "",
     "",
     "Write the letter now. Five paragraphs. 280-420 words. No labels.",
