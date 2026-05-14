@@ -4,9 +4,9 @@ import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
-  title: "Movemental — We turn promising ideas into global movements.",
+  title: "Movementum — We turn promising ideas into global movements.",
   description:
-    "Movemental builds the editorial machine that carries a category-defining idea into the world — and the community that keeps it alive once it lands.",
+    "Movementum builds the machine to carry a category-defining idea into the world — and the community that keeps it alive once it lands.",
   icons: {
     icon: "/images/movemental.svg",
   },

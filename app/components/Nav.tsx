@@ -33,7 +33,7 @@ export default function Nav() {
             priority
           />
           <span className="font-extrabold text-zinc-900 text-base tracking-tight">
-            movemental
+            movementum
           </span>
         </Link>
 

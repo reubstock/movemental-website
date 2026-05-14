@@ -39,7 +39,7 @@ export default function HomePage() {
             <span className="text-brand">global movements.</span>
           </h1>
           <p className="text-xl md:text-2xl text-zinc-600 leading-snug text-balance max-w-5xl mb-3">
-            Movemental builds the machine to carry a category-defining idea
+            Movementum builds the machine to carry a category-defining idea
             into the world.
           </p>
           <p className="text-xl md:text-2xl text-zinc-600 leading-snug text-balance max-w-3xl mb-10">

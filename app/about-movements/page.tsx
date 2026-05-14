@@ -377,7 +377,7 @@ export default function AboutMovementsPage() {
       {/* FORMULA */}
       <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100">
         <div className="max-w-5xl mx-auto">
-          <Eyebrow>After the Letter — The Movemental Formula</Eyebrow>
+          <Eyebrow>After the Letter — The Movementum Formula</Eyebrow>
           <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-6 max-w-3xl">
             Three steps. <span className="text-brand">That&rsquo;s it.</span>
           </h2>

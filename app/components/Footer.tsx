@@ -14,11 +14,11 @@ export default function Footer() {
             className="w-6 h-6"
           />
           <span className="font-extrabold text-zinc-900 text-sm">
-            movemental
+            movementum
           </span>
         </Link>
         <div className="text-xs text-zinc-500">
-          © Movemental · We turn promising ideas into global movements.
+          © Movementum · We turn promising ideas into global movements.
         </div>
       </div>
     </footer>

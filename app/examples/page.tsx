@@ -24,7 +24,7 @@ const EXAMPLES: Example[] = [
       "As the Evangelist for a small virtual world platform, helped architect a story machine that allowed residents to tell their stories as a narrative that attracted millions.",
     body: [
       "Second Life was the first true mass-market virtual world — and the first to answer the question every new platform now faces: how do you make a strange new place feel inevitable? The answer was editorial.",
-      "We built the architecture that turned residents into protagonists: a live world map, a publication of record, and a press machine that broadcast their stories outward. The playbook Movemental still runs began here.",
+      "We built the architecture that turned residents into protagonists: a live world map, a publication of record, and a press machine that broadcast their stories outward. The playbook Movementum still runs began here.",
     ],
     metric: "Millions of residents at peak",
     metricLabel: "Result",

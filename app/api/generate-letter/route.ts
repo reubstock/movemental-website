@@ -4,7 +4,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
-const SYSTEM_PROMPT = `You are a writer for Movemental, a movement-building consultancy. You draft category-defining open letters formatted as a long-form Twitter/X or LinkedIn/Facebook post — short paragraphs, generous whitespace, no labels.
+const SYSTEM_PROMPT = `You are a writer for Movementum, a movement-building consultancy. You draft category-defining open letters formatted as a long-form Twitter/X or LinkedIn/Facebook post — short paragraphs, generous whitespace, no labels.
 
 VOICE
 - Direct, declarative, semi-formal but personal. Concerned and hopeful.

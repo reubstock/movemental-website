@@ -1,10 +1,10 @@
-# Movemental — Company Site
+# Movementum — Company Site
 
 ## What This Is
-The Movemental company site. A Next.js (App Router) + Tailwind v4 multipage
-site describing what Movemental does — beginning with the "Open Letter"
+The Movementum company site. A Next.js (App Router) + Tailwind v4 multipage
+site describing what Movementum does — beginning with the "Open Letter"
 engagement, then generalized as a process (5 beats, dual-motion distribution,
-the 3-step Movemental Formula).
+the 3-step Movementum Formula).
 
 ## Source Material
 - **Open Letter process**: adapted from the NJ AI Hub Six-Month Engagement
@@ -12,7 +12,7 @@ the 3-step Movemental Formula).
   offering rather than client-specific work.
 - **Bio (Reuben Steiger)**: from page 3 of the Second Life proposal deck
   ("The Proposer" section).
-- **Logo**: the Movemental SVG (orange Apollonian disk) from the Second Life
+- **Logo**: the Movementum SVG (orange Apollonian disk) from the Second Life
   proposal site.
 
 ## Running Locally
@@ -30,7 +30,7 @@ npm run build      # production build
 
 ## Design System
 - **Brand color**: `--color-brand: #E94B1E` (defined in `app/globals.css`).
-  Accents `#FF8B4D` and `#FCD9C4` from the Movemental logo gradient.
+  Accents `#FF8B4D` and `#FCD9C4` from the Movementum logo gradient.
 - **Type**: Inter (Tailwind default sans). Bold/Black weights for headlines.
 - **Logo**: `public/images/movemental.svg` — favicon, nav, hero, footer.
 - **Pattern**: white backgrounds alternating with `#fafaf8` (soft) sections,

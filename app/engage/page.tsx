@@ -136,7 +136,7 @@ export default function EngagePage() {
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <a
-              href="mailto:reubstock@gmail.com?subject=Movemental%20—%20New%20Engagement"
+              href="mailto:reubstock@gmail.com?subject=Movementum%20—%20New%20Engagement"
               className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
             >
               reubstock@gmail.com
