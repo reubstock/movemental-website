@@ -151,30 +151,9 @@ export default function MaticPage() {
     }
   };
 
-  const shareUrl = () =>
-    typeof window !== "undefined"
-      ? `${window.location.origin}/matic`
-      : "https://movemental-website.vercel.app/matic";
-
-  const shareToTwitter = () => {
+  const saveAsPdf = () => {
     if (!letter) return;
-    const trimmed = letter.trim();
-    const snippet =
-      trimmed.length > 220
-        ? trimmed.slice(0, 220).replace(/\s+\S*$/, "") + "…"
-        : trimmed;
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      snippet
-    )}&url=${encodeURIComponent(shareUrl())}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
-
-  const shareToFacebook = () => {
-    if (!letter) return;
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      shareUrl()
-    )}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+    window.print();
   };
 
   const s = STATUS_META[status];
@@ -182,7 +161,7 @@ export default function MaticPage() {
   return (
     <>
       {/* HERO */}
-      <section className="px-5 md:px-8 py-16 md:py-20 border-b border-zinc-100">
+      <section className="px-5 md:px-8 py-16 md:py-20 border-b border-zinc-100 print:hidden">
         <div className="max-w-5xl mx-auto">
           <Eyebrow>MATIC</Eyebrow>
           <h1 className="text-5xl md:text-7xl font-black tracking-tight text-zinc-900 leading-[0.98] mb-6 max-w-[18ch]">
@@ -195,7 +174,7 @@ export default function MaticPage() {
       </section>
 
       {/* INDUSTRY SELECTOR */}
-      <section className="px-5 md:px-8 py-10 md:py-12 border-b border-zinc-100 bg-[#fafaf8]">
+      <section className="px-5 md:px-8 py-10 md:py-12 border-b border-zinc-100 bg-[#fafaf8] print:hidden">
         <div className="max-w-5xl mx-auto">
           <label
             htmlFor="industry"
@@ -245,7 +224,7 @@ export default function MaticPage() {
       </section>
 
       {/* INPUTS */}
-      <section className="px-5 md:px-8 py-12 md:py-16 border-b border-zinc-100 bg-[#fafaf8]">
+      <section className="px-5 md:px-8 py-12 md:py-16 border-b border-zinc-100 bg-[#fafaf8] print:hidden">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {QUESTIONS.map((q) => {
@@ -327,15 +306,17 @@ export default function MaticPage() {
       </section>
 
       {/* OUTPUT */}
-      <section className="px-5 md:px-8 py-16 md:py-20 border-b border-zinc-100">
-        <div className="max-w-5xl mx-auto">
-          <Eyebrow>Output</Eyebrow>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-6">
-            Draft.
-          </h2>
+      <section className="px-5 md:px-8 py-16 md:py-20 border-b border-zinc-100 print:py-0 print:px-0 print:border-0">
+        <div className="max-w-5xl mx-auto print:max-w-none">
+          <div className="print:hidden">
+            <Eyebrow>Output</Eyebrow>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-6">
+              Draft.
+            </h2>
+          </div>
 
-          <article className="bg-white border border-zinc-200 rounded-lg overflow-hidden">
-            <div className="border-b border-zinc-100 px-5 py-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-[10px] font-mono font-bold tracking-[0.18em] text-zinc-500">
+          <article className="bg-white border border-zinc-200 rounded-lg overflow-hidden print:border-0 print:rounded-none">
+            <div className="border-b border-zinc-100 px-5 py-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-[10px] font-mono font-bold tracking-[0.18em] text-zinc-500 print:hidden">
               <span>MODEL: claude-sonnet-4-6</span>
               <span className="text-zinc-200">|</span>
               <span>WORDS: {String(wordCount).padStart(3, "0")}</span>
@@ -346,12 +327,27 @@ export default function MaticPage() {
               </span>
             </div>
 
-            <div className="px-7 md:px-10 py-8 md:py-10 min-h-[320px]">
+            <div className="px-7 md:px-10 py-8 md:py-10 min-h-[320px] print:px-0 print:py-0">
+              {/* Letterhead — visible on print only */}
+              <div className="hidden print:flex items-center gap-3 mb-10 pb-5 border-b border-zinc-300">
+                <img
+                  src="/images/movemental.svg"
+                  alt=""
+                  className="w-10 h-10"
+                />
+                <div className="text-base font-extrabold tracking-tight">
+                  movemental
+                </div>
+                <div className="ml-auto text-xs font-mono tracking-[0.18em] text-zinc-500">
+                  DRAFT
+                </div>
+              </div>
+
               {letter ? (
-                <div className="text-zinc-900 text-[15px] md:text-base leading-[1.55] whitespace-pre-wrap max-w-[640px] mx-auto">
+                <div className="text-zinc-900 text-[15px] md:text-base leading-[1.55] whitespace-pre-wrap max-w-[640px] mx-auto print:max-w-none print:text-base print:leading-[1.7] print:font-serif">
                   {letter}
                   {status === "composing" && (
-                    <span className="inline-block w-2 h-5 align-middle bg-brand ml-0.5 animate-pulse" />
+                    <span className="inline-block w-2 h-5 align-middle bg-brand ml-0.5 animate-pulse print:hidden" />
                   )}
                 </div>
               ) : (
@@ -362,7 +358,7 @@ export default function MaticPage() {
             </div>
 
             {letter && status !== "composing" && (
-              <div className="border-t border-zinc-100 px-5 py-3 flex flex-wrap items-center gap-2">
+              <div className="border-t border-zinc-100 px-5 py-3 flex flex-wrap items-center gap-2 print:hidden">
                 <button
                   type="button"
                   onClick={copy}
@@ -372,37 +368,10 @@ export default function MaticPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={shareToTwitter}
-                  aria-label="Share to Twitter"
-                  title="Share to Twitter"
-                  className="inline-flex items-center justify-center w-9 h-9 border border-zinc-300 hover:border-zinc-900 hover:bg-zinc-900 hover:text-white text-zinc-700 rounded transition-colors"
+                  onClick={saveAsPdf}
+                  className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-4 py-2 text-xs font-mono font-bold tracking-[0.18em] rounded transition-colors"
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    width="13"
-                    height="13"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231L18.244 2.25Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
-                  </svg>
-                </button>
-                <button
-                  type="button"
-                  onClick={shareToFacebook}
-                  aria-label="Share to Facebook"
-                  title="Share to Facebook"
-                  className="inline-flex items-center justify-center w-9 h-9 border border-zinc-300 hover:border-zinc-900 hover:bg-zinc-900 hover:text-white text-zinc-700 rounded transition-colors"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    width="14"
-                    height="14"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="M13.5 21.5v-8.01h2.7l.4-3.13h-3.1V8.36c0-.9.25-1.52 1.55-1.52H17V4.04c-.29-.04-1.26-.12-2.39-.12-2.37 0-3.99 1.45-3.99 4.1v2.34H8v3.13h2.62V21.5h2.88Z" />
-                  </svg>
+                  SAVE AS PDF
                 </button>
                 <button
                   type="button"
@@ -416,7 +385,7 @@ export default function MaticPage() {
             )}
           </article>
 
-          <p className="mt-4 text-xs text-zinc-400 font-mono">
+          <p className="mt-4 text-xs text-zinc-400 font-mono print:hidden">
             // Inputs are sent to Anthropic for generation only. Nothing is
             saved.
           </p>
@@ -424,7 +393,7 @@ export default function MaticPage() {
       </section>
 
       {/* CTA */}
-      <section className="px-5 md:px-8 py-16 md:py-20 bg-[#0f0f10] text-white">
+      <section className="px-5 md:px-8 py-16 md:py-20 bg-[#0f0f10] text-white print:hidden">
         <div className="max-w-3xl mx-auto text-center">
           <Eyebrow className="text-[#5dd0f5]">Engage</Eyebrow>
           <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.05] mb-5">

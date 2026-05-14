@@ -17,7 +17,7 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-zinc-100">
+    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-zinc-100 print:hidden">
       <div className="max-w-6xl mx-auto px-5 md:px-8 py-3.5 flex items-center gap-6">
         <Link
           href="/"
