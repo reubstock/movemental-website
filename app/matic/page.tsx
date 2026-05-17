@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Eyebrow from "../components/Eyebrow";
+import LeadForm from "../components/LeadForm";
 import ReferenceDocs, {
   useReferenceDocs,
 } from "../components/ReferenceDocs";
@@ -318,6 +319,18 @@ export default function MaticPage() {
               </div>
             )}
           </article>
+
+          {/* LEAD CAPTURE — only after generation */}
+          {letter && status !== "composing" && (
+            <div className="mt-4">
+              <LeadForm
+                tool="matic"
+                ctaLabel="Have us refine and launch this letter"
+                intent="Refine and launch this letter"
+                getContext={() => letter}
+              />
+            </div>
+          )}
         </div>
       </section>
 

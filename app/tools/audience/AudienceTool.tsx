@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import LeadForm from "../../components/LeadForm";
 
 type Mode = "amplifiers" | "segmentation" | "profiles";
 type Status = "idle" | "streaming" | "done" | "error";
@@ -518,6 +519,18 @@ export default function AudienceTool() {
                     {savedMsg}
                   </span>
                 )}
+              </div>
+            )}
+
+            {status === "done" && output && (
+              <div className="mt-5">
+                <LeadForm
+                  tool="audience"
+                  ctaLabel="Book a working session on this"
+                  intent={`Working session on ${mode} analysis`}
+                  getContext={() => output}
+                  theme="firstshift"
+                />
               </div>
             )}
           </div>

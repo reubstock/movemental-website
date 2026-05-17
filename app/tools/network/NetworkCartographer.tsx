@@ -16,6 +16,7 @@ import {
   type Match,
   type Person,
 } from "./lib";
+import LeadForm from "../../components/LeadForm";
 
 type View = "map" | "network";
 type Status = "idle" | "parsing" | "done" | "error";
@@ -489,6 +490,18 @@ export default function NetworkCartographer() {
                       <MatchRow key={`${m.query}-${i}`} match={m} />
                     ))}
                   </div>
+                </div>
+              )}
+
+              {matchSummary && matches && matchSummary.total > 0 && (
+                <div className="mt-7">
+                  <LeadForm
+                    tool="cartographer"
+                    ctaLabel="Help me run outreach to these"
+                    intent="Run outreach to warm contacts"
+                    getContext={() => formatMatchesForLead(matches)}
+                    theme="firstshift"
+                  />
                 </div>
               )}
             </div>
@@ -1104,6 +1117,38 @@ function drawNetwork(
 // ===========================================================================
 // Utils
 // ===========================================================================
+
+function formatMatchesForLead(matches: Match[]): string {
+  const lines: string[] = [];
+  let totalHits = 0;
+  let totalContacts = 0;
+  for (const m of matches) {
+    if (m.people.length > 0) {
+      totalHits += 1;
+      totalContacts += m.people.length;
+    }
+  }
+  lines.push(
+    `Target-list match — ${totalHits} of ${matches.length} targets had a match · ${totalContacts} warm contacts total.`
+  );
+  lines.push("");
+  for (const m of matches) {
+    if (m.people.length === 0) {
+      lines.push(`${m.query} — no match`);
+      continue;
+    }
+    const matchedAs =
+      m.matchedCompanyName && m.matchedCompanyName !== m.query
+        ? ` (matched as ${m.matchedCompanyName})`
+        : "";
+    lines.push(`${m.query}${matchedAs} — ${m.people.length} contact(s):`);
+    for (const p of m.people) {
+      lines.push(`  - ${p.fullName}${p.position ? ` — ${p.position}` : ""}`);
+    }
+    lines.push("");
+  }
+  return lines.join("\n").trim();
+}
 
 function csvCell(v: string): string {
   if (v == null) return "";
