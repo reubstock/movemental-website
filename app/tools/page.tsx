@@ -11,7 +11,10 @@ type Tool = {
   name: string;
   subtitle: string;
   description: string;
-  accent: string;
+  // Gradient background wash for the card
+  bgClass: string;
+  // Color used for the step label, hover border, subtitle, and arrow
+  tintHex: string;
   available: boolean;
   newTab?: boolean;
 };
@@ -25,7 +28,8 @@ const TOOLS: Tool[] = [
     subtitle: "Inputs → Letter",
     description:
       "Four questions plus an industry. One short Open Letter. Under ninety seconds. The first deliverable on every Movementum engagement.",
-    accent: "from-accent/15 to-transparent",
+    bgClass: "from-tint-peach/70 via-tint-peach/25 to-transparent",
+    tintHex: "#ec7c5c",
     available: true,
   },
   {
@@ -36,7 +40,8 @@ const TOOLS: Tool[] = [
     subtitle: "Connections → Warm Targets",
     description:
       "Drop your LinkedIn connections export. See where your network is dense, find companies where you already know someone, and match against any target list. Local-only.",
-    accent: "from-accent/15 to-transparent",
+    bgClass: "from-tint-sage/70 via-tint-sage/25 to-transparent",
+    tintHex: "#5e8463",
     available: true,
     newTab: true,
   },
@@ -48,7 +53,8 @@ const TOOLS: Tool[] = [
     subtitle: "Letter → People",
     description:
       "Once you have the letter, find the people. Amplifier shortlist, network segmentation, profile briefs — generated from LinkedIn data you paste or upload.",
-    accent: "from-navy/10 to-transparent",
+    bgClass: "from-tint-butter/70 via-tint-butter/25 to-transparent",
+    tintHex: "#ab8a30",
     available: true,
     newTab: true,
   },
@@ -93,26 +99,49 @@ export default function ToolsHub() {
               {...(t.newTab
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
-              className={`group relative overflow-hidden rounded-3xl border border-border-default bg-gradient-to-br ${t.accent} bg-white p-8 transition-all hover:border-accent/40 hover:shadow-lg hover:shadow-navy/5`}
+              style={
+                {
+                  "--card-tint": t.tintHex,
+                } as React.CSSProperties
+              }
+              className={`group relative overflow-hidden rounded-3xl border border-border-default bg-white bg-gradient-to-br ${t.bgClass} p-8 transition-all hover:shadow-lg hover:shadow-navy/5`}
+              onMouseEnter={undefined}
             >
-              <div className="flex items-baseline justify-between">
-                <span className="font-mono text-xs font-medium text-accent-hover">
+              {/* Hover border color via inline var so each card gets its own */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity group-hover:opacity-100"
+                style={{
+                  boxShadow: `inset 0 0 0 1.5px var(--card-tint)`,
+                }}
+              />
+              <div className="relative flex items-baseline justify-between">
+                <span
+                  className="font-mono text-xs font-medium"
+                  style={{ color: t.tintHex }}
+                >
                   TOOL {t.step}
                 </span>
                 <span className="font-mono text-[10px] uppercase tracking-wider text-foreground-subtle">
                   {t.available ? "Live" : "Soon"}
                 </span>
               </div>
-              <h2 className="mt-6 text-4xl font-semibold tracking-tight text-navy">
+              <h2 className="relative mt-6 text-4xl font-semibold tracking-tight text-navy">
                 {t.name}
               </h2>
-              <div className="mt-1 text-sm font-medium uppercase tracking-wider text-accent-hover">
+              <div
+                className="relative mt-1 text-sm font-medium uppercase tracking-wider"
+                style={{ color: t.tintHex }}
+              >
                 {t.subtitle}
               </div>
-              <p className="mt-5 text-base leading-7 text-foreground-muted">
+              <p className="relative mt-5 text-base leading-7 text-foreground-muted">
                 {t.description}
               </p>
-              <div className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-navy group-hover:text-accent-hover">
+              <div
+                className="relative mt-8 inline-flex items-center gap-2 text-sm font-medium text-navy transition-colors"
+                style={{ color: undefined }}
+              >
                 Open {t.name}
                 <svg
                   width="14"
