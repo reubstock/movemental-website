@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Link from "next/link";
 import Eyebrow from "../components/Eyebrow";
 import ReferenceDocs, {
   useReferenceDocs,
@@ -36,7 +35,8 @@ const QUESTIONS: Question[] = [
     n: "02",
     key: "moment",
     prompt: "What's a specific moment that made you realize this?",
-    placeholder: "A meeting, a conversation, a line in a report — the scene that crystallized it.",
+    placeholder:
+      "A meeting, a conversation, a line in a report — the scene that crystallized it.",
   },
   {
     n: "03",
@@ -67,6 +67,28 @@ const STATUS_META: Record<Status, { dot: string; label: string }> = {
   error: { dot: "bg-red-500", label: "ERROR" },
 };
 
+function LetterIcon({ size = 56 }: { size?: number }) {
+  return (
+    <svg
+      viewBox="0 0 64 64"
+      width={size}
+      height={size}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="14" y="10" width="36" height="44" rx="3" />
+      <line x1="22" y1="22" x2="42" y2="22" />
+      <line x1="22" y1="30" x2="42" y2="30" />
+      <line x1="22" y1="38" x2="42" y2="38" />
+      <line x1="22" y1="46" x2="34" y2="46" />
+    </svg>
+  );
+}
+
 export default function MaticPage() {
   const [industry, setIndustry] = useState("");
   const [values, setValues] = useState<Record<string, string>>({});
@@ -76,6 +98,7 @@ export default function MaticPage() {
   const [elapsed, setElapsed] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
+  const outputRef = useRef<HTMLElement>(null);
 
   const update = (key: string, v: string) =>
     setValues((p) => ({ ...p, [key]: v }));
@@ -86,6 +109,9 @@ export default function MaticPage() {
 
   const run = async () => {
     if (!canRun) return;
+
+    // Scroll to the draft so streaming is visible
+    outputRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
     setLetter("");
     setStatus("composing");
@@ -179,186 +205,39 @@ export default function MaticPage() {
     } catch {
       /* ignore */
     }
-    window.open(
-      "https://www.facebook.com/",
-      "_blank",
-      "noopener,noreferrer"
-    );
+    window.open("https://www.facebook.com/", "_blank", "noopener,noreferrer");
   };
 
   const s = STATUS_META[status];
 
   return (
     <>
-      {/* HERO */}
-      <section className="px-5 md:px-8 py-16 md:py-20 border-b border-zinc-100">
-        <div className="max-w-5xl mx-auto">
-          <Eyebrow>MATIC</Eyebrow>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-zinc-900 leading-[0.98] mb-6 max-w-[18ch]">
-            Inputs <span className="text-brand">→</span> Letter.
-          </h1>
-          <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl">
-            Four questions. One short open letter. Under ninety seconds.
-          </p>
-        </div>
-      </section>
-
-      {/* REFERENCE DOCUMENTS — full-width, top of the inputs flow */}
-      <section className="px-5 md:px-8 py-10 md:py-12 border-b border-zinc-100">
-        <div className="max-w-5xl mx-auto">
-          <ReferenceDocs docs={refDocs} setDocs={setRefDocs} />
-        </div>
-      </section>
-
-      {/* INDUSTRY SELECTOR */}
-      <section className="px-5 md:px-8 py-10 md:py-12 border-b border-zinc-100 bg-[#fafaf8]">
-        <div className="max-w-5xl mx-auto">
-          <label
-            htmlFor="industry"
-            className="block text-[10px] font-mono font-bold tracking-[0.18em] text-brand mb-3"
-          >
-            INDUSTRY
-          </label>
-          <div className="relative">
-            <select
-              id="industry"
-              value={industry}
-              onChange={(e) => setIndustry(e.target.value)}
-              className={`w-full appearance-none bg-white border rounded-lg px-5 py-4 pr-12 text-lg md:text-xl font-bold tracking-tight focus:outline-none focus:border-brand transition-colors cursor-pointer ${
-                industry
-                  ? "border-brand text-zinc-900"
-                  : "border-zinc-200 text-zinc-400"
-              }`}
-            >
-              <option value="">Select an industry…</option>
-              {INDUSTRIES.map((i) => (
-                <option key={i} value={i} className="text-zinc-900">
-                  {i}
-                </option>
-              ))}
-            </select>
-            <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400">
-              <svg
-                viewBox="0 0 24 24"
-                width="20"
-                height="20"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </div>
+      {/* HERO with letter icon */}
+      <section className="px-5 md:px-8 py-8 md:py-12 border-b border-zinc-100">
+        <div className="max-w-5xl mx-auto flex items-start gap-4 md:gap-6">
+          <div className="shrink-0 text-brand">
+            <LetterIcon size={64} />
           </div>
-          <p className="mt-3 text-xs font-mono text-zinc-400">
-            // Frames the draft. Picks the players and references the letter
-            leans on.
-          </p>
-        </div>
-      </section>
-
-      {/* INPUTS */}
-      <section className="px-5 md:px-8 py-12 md:py-16 border-b border-zinc-100 bg-[#fafaf8]">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {QUESTIONS.map((q) => {
-              const isFilled = !!values[q.key]?.trim();
-              return (
-                <article
-                  key={q.key}
-                  className={`bg-white border rounded-lg p-6 flex flex-col gap-3 transition-colors ${
-                    isFilled ? "border-brand" : "border-zinc-200"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="text-[10px] font-mono font-bold tracking-[0.18em] text-brand">
-                      INPUT {q.n}
-                    </div>
-                    <div
-                      className={`w-1.5 h-1.5 rounded-full ${
-                        isFilled ? "bg-brand" : "bg-zinc-200"
-                      }`}
-                    />
-                  </div>
-                  <label
-                    htmlFor={`q-${q.key}`}
-                    className="text-lg md:text-xl font-black text-zinc-900 leading-tight"
-                  >
-                    {q.prompt}
-                  </label>
-                  <textarea
-                    id={`q-${q.key}`}
-                    value={values[q.key] ?? ""}
-                    onChange={(e) => update(q.key, e.target.value)}
-                    rows={3}
-                    placeholder={q.placeholder}
-                    className="w-full bg-white border border-zinc-200 rounded-md px-4 py-3 text-base text-zinc-900 placeholder:text-zinc-300 focus:outline-none focus:border-brand transition-colors resize-y leading-relaxed"
-                  />
-                </article>
-              );
-            })}
-          </div>
-
-          {/* RUN BAR */}
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            {status !== "composing" ? (
-              <button
-                type="button"
-                onClick={run}
-                disabled={!canRun}
-                className="inline-flex items-center bg-brand hover:bg-[#0091c2] disabled:opacity-40 disabled:cursor-not-allowed text-white px-8 py-4 text-sm font-mono font-bold tracking-[0.18em] rounded transition-colors"
-              >
-                RUN ↵
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={stop}
-                className="inline-flex items-center border-2 border-brand text-brand hover:bg-brand hover:text-white px-8 py-4 text-sm font-mono font-bold tracking-[0.18em] rounded transition-colors"
-              >
-                STOP
-              </button>
-            )}
-            {(letter || filled > 0) && status !== "composing" && (
-              <button
-                type="button"
-                onClick={reset}
-                className="inline-flex items-center text-zinc-500 hover:text-zinc-900 px-4 py-2 text-xs font-mono font-bold tracking-[0.18em] transition-colors"
-              >
-                RESET
-              </button>
-            )}
-            {refDocs.length > 0 && (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-tint px-3 py-1 text-[10px] font-mono font-bold tracking-[0.16em] uppercase text-brand">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-                +{refDocs.length} ref doc
-                {refDocs.length === 1 ? "" : "s"}
-              </span>
-            )}
-            <div className="ml-auto flex items-center gap-2 text-[11px] font-mono font-bold tracking-[0.18em] text-zinc-500">
-              <span className={`w-2 h-2 rounded-full ${s.dot}`} />
-              {s.label}
-              {elapsed && status === "ready" && (
-                <span className="text-zinc-400">· {elapsed.toFixed(1)}s</span>
-              )}
-            </div>
+          <div className="flex-1 min-w-0">
+            <Eyebrow className="mb-1">MATIC</Eyebrow>
+            <h1 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.02]">
+              Inputs <span className="text-brand">→</span> Letter.
+            </h1>
+            <p className="mt-2 text-base md:text-lg text-zinc-600 leading-snug">
+              Four questions. One short open letter. Under ninety seconds.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* OUTPUT */}
-      <section className="px-5 md:px-8 py-16 md:py-20 border-b border-zinc-100">
+      {/* OUTPUT — the goal, sits at top */}
+      <section
+        ref={outputRef}
+        className="px-5 md:px-8 py-6 md:py-8 border-b border-zinc-100 scroll-mt-4"
+      >
         <div className="max-w-5xl mx-auto">
-          <Eyebrow>Output</Eyebrow>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-6">
-            Draft.
-          </h2>
-
           <article className="bg-white border border-zinc-200 rounded-lg overflow-hidden">
-            <div className="border-b border-zinc-100 px-5 py-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-[10px] font-mono font-bold tracking-[0.18em] text-zinc-500">
+            <div className="border-b border-zinc-100 px-5 py-2.5 flex flex-wrap items-center gap-x-5 gap-y-1 text-[10px] font-mono font-bold tracking-[0.18em] text-zinc-500">
               <span>MODEL: claude-sonnet-4-6</span>
               <span className="text-zinc-200">|</span>
               <span>WORDS: {String(wordCount).padStart(3, "0")}</span>
@@ -369,7 +248,7 @@ export default function MaticPage() {
               </span>
             </div>
 
-            <div className="px-7 md:px-10 py-8 md:py-10 min-h-[320px]">
+            <div className="px-7 md:px-10 py-6 md:py-8 min-h-[260px]">
               {letter ? (
                 <div className="text-zinc-900 text-[15px] md:text-base leading-[1.55] whitespace-pre-wrap max-w-[640px] mx-auto">
                   {letter}
@@ -379,13 +258,14 @@ export default function MaticPage() {
                 </div>
               ) : (
                 <div className="text-sm font-mono text-zinc-300">
-                  // Awaiting RUN command.
+                  // Your letter will appear here. Fill the inputs below and
+                  press RUN.
                 </div>
               )}
             </div>
 
             {letter && status !== "composing" && (
-              <div className="border-t border-zinc-100 px-5 py-3 flex flex-wrap items-center gap-2">
+              <div className="border-t border-zinc-100 px-5 py-2.5 flex flex-wrap items-center gap-2">
                 <button
                   type="button"
                   onClick={copy}
@@ -438,6 +318,147 @@ export default function MaticPage() {
               </div>
             )}
           </article>
+        </div>
+      </section>
+
+      {/* REFERENCE DOCUMENTS — compressed */}
+      <section className="px-5 md:px-8 py-6 md:py-8 border-b border-zinc-100 bg-[#fafaf8]">
+        <div className="max-w-5xl mx-auto">
+          <ReferenceDocs docs={refDocs} setDocs={setRefDocs} />
+        </div>
+      </section>
+
+      {/* INDUSTRY + INPUTS — combined, compressed */}
+      <section className="px-5 md:px-8 py-6 md:py-10 border-b border-zinc-100 bg-[#fafaf8]">
+        <div className="max-w-5xl mx-auto">
+          {/* Industry — inline pill */}
+          <div className="mb-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+            <label
+              htmlFor="industry"
+              className="text-[10px] font-mono font-bold tracking-[0.18em] text-brand sm:w-28 shrink-0"
+            >
+              INDUSTRY
+            </label>
+            <div className="relative flex-1">
+              <select
+                id="industry"
+                value={industry}
+                onChange={(e) => setIndustry(e.target.value)}
+                className={`w-full appearance-none bg-white border rounded-md px-4 py-2.5 pr-10 text-base font-bold tracking-tight focus:outline-none focus:border-brand transition-colors cursor-pointer ${
+                  industry
+                    ? "border-brand text-zinc-900"
+                    : "border-zinc-200 text-zinc-400"
+                }`}
+              >
+                <option value="">Select an industry…</option>
+                {INDUSTRIES.map((i) => (
+                  <option key={i} value={i} className="text-zinc-900">
+                    {i}
+                  </option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Question grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {QUESTIONS.map((q) => {
+              const isFilled = !!values[q.key]?.trim();
+              return (
+                <article
+                  key={q.key}
+                  className={`bg-white border rounded-lg p-5 flex flex-col gap-2.5 transition-colors ${
+                    isFilled ? "border-brand" : "border-zinc-200"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="text-[10px] font-mono font-bold tracking-[0.18em] text-brand">
+                      INPUT {q.n}
+                    </div>
+                    <div
+                      className={`w-1.5 h-1.5 rounded-full ${
+                        isFilled ? "bg-brand" : "bg-zinc-200"
+                      }`}
+                    />
+                  </div>
+                  <label
+                    htmlFor={`q-${q.key}`}
+                    className="text-base md:text-lg font-black text-zinc-900 leading-tight"
+                  >
+                    {q.prompt}
+                  </label>
+                  <textarea
+                    id={`q-${q.key}`}
+                    value={values[q.key] ?? ""}
+                    onChange={(e) => update(q.key, e.target.value)}
+                    rows={3}
+                    placeholder={q.placeholder}
+                    className="w-full bg-white border border-zinc-200 rounded-md px-3 py-2.5 text-base text-zinc-900 placeholder:text-zinc-300 focus:outline-none focus:border-brand transition-colors resize-y leading-relaxed"
+                  />
+                </article>
+              );
+            })}
+          </div>
+
+          {/* RUN bar */}
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            {status !== "composing" ? (
+              <button
+                type="button"
+                onClick={run}
+                disabled={!canRun}
+                className="inline-flex items-center bg-brand hover:bg-[#0091c2] disabled:opacity-40 disabled:cursor-not-allowed text-white px-7 py-3.5 text-sm font-mono font-bold tracking-[0.18em] rounded transition-colors"
+              >
+                RUN ↵
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={stop}
+                className="inline-flex items-center border-2 border-brand text-brand hover:bg-brand hover:text-white px-7 py-3.5 text-sm font-mono font-bold tracking-[0.18em] rounded transition-colors"
+              >
+                STOP
+              </button>
+            )}
+            {(letter || filled > 0) && status !== "composing" && (
+              <button
+                type="button"
+                onClick={reset}
+                className="inline-flex items-center text-zinc-500 hover:text-zinc-900 px-3 py-2 text-xs font-mono font-bold tracking-[0.18em] transition-colors"
+              >
+                RESET
+              </button>
+            )}
+            {refDocs.length > 0 && (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-tint px-3 py-1 text-[10px] font-mono font-bold tracking-[0.16em] uppercase text-brand">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+                +{refDocs.length} ref doc
+                {refDocs.length === 1 ? "" : "s"}
+              </span>
+            )}
+            <div className="ml-auto flex items-center gap-2 text-[11px] font-mono font-bold tracking-[0.18em] text-zinc-500">
+              <span className={`w-2 h-2 rounded-full ${s.dot}`} />
+              {s.label}
+              {elapsed && status === "ready" && (
+                <span className="text-zinc-400">· {elapsed.toFixed(1)}s</span>
+              )}
+            </div>
+          </div>
 
           <p className="mt-4 text-xs text-zinc-400 font-mono">
             // Inputs are sent to Anthropic for generation only. Nothing is
@@ -447,15 +468,15 @@ export default function MaticPage() {
       </section>
 
       {/* CTA */}
-      <section className="px-5 md:px-8 py-16 md:py-20 bg-[#0f0f10] text-white">
+      <section className="px-5 md:px-8 py-12 md:py-16 bg-[#0f0f10] text-white">
         <div className="max-w-3xl mx-auto text-center">
           <Eyebrow className="text-[#5dd0f5]">Engage</Eyebrow>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.05] mb-5">
+          <h2 className="text-2xl md:text-4xl font-black tracking-tight leading-[1.05] mb-4">
             Want this letter actually published?
           </h2>
-          <p className="text-lg text-white/70 leading-relaxed mb-8">
-            Bring us the draft. We&rsquo;ll sharpen it, line up the
-            endorsers, and run the public + private launch.
+          <p className="text-base md:text-lg text-white/70 leading-relaxed mb-6">
+            Bring us the draft. We&rsquo;ll sharpen it, line up the endorsers,
+            and run the public + private launch.
           </p>
           <a
             href="mailto:reubstock@gmail.com"
