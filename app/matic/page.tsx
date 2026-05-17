@@ -203,6 +203,13 @@ export default function MaticPage() {
         </div>
       </section>
 
+      {/* REFERENCE DOCUMENTS — full-width, top of the inputs flow */}
+      <section className="px-5 md:px-8 py-10 md:py-12 border-b border-zinc-100">
+        <div className="max-w-5xl mx-auto">
+          <ReferenceDocs docs={refDocs} setDocs={setRefDocs} />
+        </div>
+      </section>
+
       {/* INDUSTRY SELECTOR */}
       <section className="px-5 md:px-8 py-10 md:py-12 border-b border-zinc-100 bg-[#fafaf8]">
         <div className="max-w-5xl mx-auto">
@@ -295,11 +302,6 @@ export default function MaticPage() {
             })}
           </div>
 
-          {/* REFERENCE DOCS — optional context */}
-          <div className="mt-6">
-            <ReferenceDocs docs={refDocs} setDocs={setRefDocs} />
-          </div>
-
           {/* RUN BAR */}
           <div className="mt-6 flex flex-wrap items-center gap-3">
             {status !== "composing" ? (
@@ -328,6 +330,13 @@ export default function MaticPage() {
               >
                 RESET
               </button>
+            )}
+            {refDocs.length > 0 && (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-tint px-3 py-1 text-[10px] font-mono font-bold tracking-[0.16em] uppercase text-brand">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+                +{refDocs.length} ref doc
+                {refDocs.length === 1 ? "" : "s"}
+              </span>
             )}
             <div className="ml-auto flex items-center gap-2 text-[11px] font-mono font-bold tracking-[0.18em] text-zinc-500">
               <span className={`w-2 h-2 rounded-full ${s.dot}`} />
