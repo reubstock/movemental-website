@@ -29,6 +29,19 @@ const MUTED = "#475569";
 const SUBTLE = "#64748b";
 const SELECTED = "#dc2626";
 
+// Sequential color scale by company group size, used by both views.
+const SIZE_TIERS = [
+  { min: 20, color: "#0e7490", label: "20+" },
+  { min: 10, color: "#0891b2", label: "10–19" },
+  { min: 5, color: "#5dd0f5", label: "5–9" },
+  { min: 2, color: "#b8e6f9", label: "2–4" },
+];
+
+function sizeToColor(n: number): string {
+  for (const t of SIZE_TIERS) if (n >= t.min) return t.color;
+  return SIZE_TIERS[SIZE_TIERS.length - 1].color;
+}
+
 // Force-directed graph caps so the layout stays interactive on big networks.
 const NETWORK_MAX_COMPANIES = 80;
 const NETWORK_MAX_PEOPLE_PER_COMPANY = 15;
@@ -52,7 +65,35 @@ export default function NetworkCartographer() {
     d3.SimulationNodeDatum,
     undefined
   > | null>(null);
+  const zoomRef = useRef<d3.ZoomBehavior<
+    SVGSVGElement,
+    unknown
+  > | null>(null);
   const [chartWidth, setChartWidth] = useState(0);
+
+  const zoomIn = useCallback(() => {
+    if (!svgRef.current || !zoomRef.current) return;
+    d3.select(svgRef.current)
+      .transition()
+      .duration(220)
+      .call(zoomRef.current.scaleBy, 1.5);
+  }, []);
+
+  const zoomOut = useCallback(() => {
+    if (!svgRef.current || !zoomRef.current) return;
+    d3.select(svgRef.current)
+      .transition()
+      .duration(220)
+      .call(zoomRef.current.scaleBy, 1 / 1.5);
+  }, []);
+
+  const resetZoom = useCallback(() => {
+    if (!svgRef.current || !zoomRef.current) return;
+    d3.select(svgRef.current)
+      .transition()
+      .duration(360)
+      .call(zoomRef.current.transform, d3.zoomIdentity);
+  }, []);
 
   // ---------------------------------------------------------------------------
   // File handling
@@ -149,26 +190,37 @@ export default function NetworkCartographer() {
     // Tear down anything we previously drew
     simulationRef.current?.stop();
     simulationRef.current = null;
+    zoomRef.current = null;
     const svg = d3.select(svgRef.current);
+    svg.on(".zoom", null); // clear any previous zoom listeners
     svg.selectAll("*").remove();
     svg.attr("viewBox", `0 0 ${width} ${height}`);
 
     if (view === "map") {
-      drawBubbles(svg, multiCompanies, width, height, setSelectedKey);
-    } else {
-      const sim = drawNetwork(
+      const zoom = drawBubbles(
         svg,
         multiCompanies,
         width,
         height,
         setSelectedKey
       );
-      simulationRef.current = sim;
+      zoomRef.current = zoom;
+    } else {
+      const { simulation, zoom } = drawNetwork(
+        svg,
+        multiCompanies,
+        width,
+        height,
+        setSelectedKey
+      );
+      simulationRef.current = simulation;
+      zoomRef.current = zoom;
     }
 
     return () => {
       simulationRef.current?.stop();
       simulationRef.current = null;
+      zoomRef.current = null;
     };
   }, [result, view, chartWidth, multiCompanies]);
 
@@ -182,22 +234,22 @@ export default function NetworkCartographer() {
       const node = d3.select(this);
       const key = node.attr("data-company-key");
       const isSelected = !!selectedKey && key === selectedKey;
+      const size = Number(node.attr("data-size")) || 2;
+      const tintFill = sizeToColor(size);
       node.select("circle").attr("stroke", isSelected ? SELECTED : ACCENT);
       node
         .select("circle")
         .attr("stroke-width", isSelected ? 2.5 : 1);
-      if (view === "map") {
-        node
-          .select("circle")
-          .attr(
-            "fill",
-            isSelected ? "rgba(220, 38, 38, 0.18)" : "rgba(8, 145, 178, 0.15)"
-          );
-      } else {
-        node
-          .select("circle")
-          .attr("fill", isSelected ? SELECTED : ACCENT);
-      }
+      node
+        .select("circle")
+        .attr(
+          "fill",
+          isSelected
+            ? view === "map"
+              ? "rgba(220, 38, 38, 0.22)"
+              : SELECTED
+            : tintFill
+        );
     });
   }, [selectedKey, view, result]);
 
@@ -373,13 +425,69 @@ export default function NetworkCartographer() {
 
                 <div
                   ref={chartContainerRef}
-                  className="mt-5 w-full overflow-hidden rounded-2xl border border-border-default bg-background-soft"
+                  className="relative mt-5 w-full overflow-hidden rounded-2xl border border-border-default bg-background-soft"
                   style={{ minHeight: 560 }}
                 >
                   <svg ref={svgRef} width="100%" height={560} />
+
+                  {/* Zoom controls — top-right overlay */}
+                  <div className="absolute right-3 top-3 flex flex-col gap-1.5">
+                    <ZoomButton
+                      onClick={zoomIn}
+                      label="Zoom in"
+                      iconKey="plus"
+                    />
+                    <ZoomButton
+                      onClick={zoomOut}
+                      label="Zoom out"
+                      iconKey="minus"
+                    />
+                    <ZoomButton
+                      onClick={resetZoom}
+                      label="Reset view"
+                      iconKey="reset"
+                    />
+                  </div>
+
+                  {/* Hint — bottom-left overlay */}
+                  <div className="absolute bottom-3 left-3 rounded-md bg-white/90 px-2.5 py-1 backdrop-blur-sm">
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-foreground-subtle">
+                      scroll · pinch · drag to pan
+                    </span>
+                  </div>
                 </div>
 
-                <p className="mt-3 text-xs text-foreground-subtle">
+                {/* Size legend + caption */}
+                <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-foreground-subtle">
+                  <span className="font-mono font-bold tracking-wider uppercase">
+                    Size
+                  </span>
+                  {SIZE_TIERS.slice()
+                    .reverse()
+                    .map((t) => (
+                      <span
+                        key={t.min}
+                        className="inline-flex items-center gap-1.5"
+                      >
+                        <span
+                          className="inline-block h-3 w-3 rounded-full border border-accent/30"
+                          style={{ background: t.color }}
+                          aria-hidden
+                        />
+                        {t.label}
+                      </span>
+                    ))}
+                  <span className="inline-flex items-center gap-1.5 border-l border-border-default pl-3">
+                    <span
+                      className="inline-block h-3 w-3 rounded-full border-2"
+                      style={{ borderColor: SELECTED }}
+                      aria-hidden
+                    />
+                    selected
+                  </span>
+                </div>
+
+                <p className="mt-2 text-xs text-foreground-subtle">
                   {view === "map" ? (
                     <>
                       Each circle is a company. Size = how many people you
@@ -387,9 +495,10 @@ export default function NetworkCartographer() {
                     </>
                   ) : (
                     <>
-                      Each dot is a person. Edges connect people at the
-                      same company — inferred from coworker overlap, not
-                      actual relationships. Limited to the top{" "}
+                      Each dot is a person, colored by the size of their
+                      company group. Edges connect people at the same
+                      company — inferred from coworker overlap, not actual
+                      relationships. Limited to the top{" "}
                       {NETWORK_MAX_COMPANIES} multi-connection companies for
                       readability.
                     </>
@@ -813,6 +922,76 @@ function SidePanel({
   );
 }
 
+function ZoomButton({
+  onClick,
+  label,
+  iconKey,
+}: {
+  onClick: () => void;
+  label: string;
+  iconKey: "plus" | "minus" | "reset";
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+      className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border-default bg-white text-navy shadow-sm transition-colors hover:border-accent hover:text-accent-hover"
+    >
+      {iconKey === "plus" && (
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+      )}
+      {iconKey === "minus" && (
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+      )}
+      {iconKey === "reset" && (
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <polyline points="4 14 4 20 10 20" />
+          <polyline points="20 10 20 4 14 4" />
+          <line x1="14" y1="10" x2="21" y2="3" />
+          <line x1="3" y1="21" x2="10" y2="14" />
+        </svg>
+      )}
+    </button>
+  );
+}
+
 function MatchRow({ match }: { match: Match }) {
   const hit = match.people.length > 0;
   return (
@@ -881,7 +1060,7 @@ function drawBubbles(
   width: number,
   height: number,
   onSelect: (key: string) => void
-) {
+): d3.ZoomBehavior<SVGSVGElement, unknown> | null {
   if (companies.length === 0) {
     svg
       .append("text")
@@ -894,7 +1073,7 @@ function drawBubbles(
       .text(
         "No company has more than one connection — nothing to map. Add target list below."
       );
-    return;
+    return null;
   }
 
   type PackInput = { name: string; children: CompanyNode[] };
@@ -906,19 +1085,25 @@ function drawBubbles(
     .sum((d) => ("people" in d ? (d as CompanyNode).people.length : 0))
     .sort((a, b) => (b.value || 0) - (a.value || 0));
 
-  const pack = d3.pack<PackInput | CompanyNode>().size([width, height]).padding(3);
+  const pack = d3
+    .pack<PackInput | CompanyNode>()
+    .size([width, height])
+    .padding(3);
   pack(root);
 
   const leaves = root.leaves() as d3.HierarchyCircularNode<CompanyNode>[];
 
-  const g = svg.append("g");
-  const nodes = g
+  // Root <g> — everything inside gets zoomed/panned by the zoom behavior
+  const zoomLayer = svg.append("g");
+
+  const nodes = zoomLayer
     .selectAll<SVGGElement, d3.HierarchyCircularNode<CompanyNode>>("g")
     .data(leaves)
     .enter()
     .append("g")
     .attr("class", "cartographer-node")
     .attr("data-company-key", (d) => d.data.key)
+    .attr("data-size", (d) => d.data.people.length)
     .attr("transform", (d) => `translate(${d.x}, ${d.y})`)
     .style("cursor", "pointer")
     .on("click", (_, d) => onSelect(d.data.key));
@@ -926,7 +1111,7 @@ function drawBubbles(
   nodes
     .append("circle")
     .attr("r", (d) => d.r)
-    .attr("fill", "rgba(8, 145, 178, 0.15)")
+    .attr("fill", (d) => sizeToColor(d.data.people.length))
     .attr("stroke", ACCENT)
     .attr("stroke-width", 1);
 
@@ -957,6 +1142,17 @@ function drawBubbles(
   nodes
     .append("title")
     .text((d) => `${d.data.name} — ${d.data.people.length} people`);
+
+  // Zoom & pan
+  const zoom = d3
+    .zoom<SVGSVGElement, unknown>()
+    .scaleExtent([0.3, 8])
+    .on("zoom", (event) => {
+      zoomLayer.attr("transform", event.transform.toString());
+    });
+  svg.call(zoom).on("dblclick.zoom", null);
+
+  return zoom;
 }
 
 type FNode = d3.SimulationNodeDatum & {
@@ -977,12 +1173,19 @@ function drawNetwork(
   width: number,
   height: number,
   onSelect: (key: string) => void
-): d3.Simulation<d3.SimulationNodeDatum, undefined> {
+): {
+  simulation: d3.Simulation<d3.SimulationNodeDatum, undefined>;
+  zoom: d3.ZoomBehavior<SVGSVGElement, unknown>;
+} {
   // Cap for readability
   const capped = companies.slice(0, NETWORK_MAX_COMPANIES).map((c) => ({
     ...c,
     people: c.people.slice(0, NETWORK_MAX_PEOPLE_PER_COMPANY),
   }));
+
+  // Lookup of company key → group size (for coloring person nodes by company size)
+  const groupSize = new Map<string, number>();
+  capped.forEach((c) => groupSize.set(c.key, c.people.length));
 
   const nodes: FNode[] = [];
   const links: FLink[] = [];
@@ -1002,9 +1205,10 @@ function drawNetwork(
     }
   });
 
-  const g = svg.append("g");
+  // Root <g> — everything inside gets zoomed/panned
+  const zoomLayer = svg.append("g");
 
-  const linkSel = g
+  const linkSel = zoomLayer
     .append("g")
     .attr("stroke", ACCENT)
     .attr("stroke-opacity", 0.12)
@@ -1014,7 +1218,7 @@ function drawNetwork(
     .append("line")
     .attr("stroke-width", 0.7);
 
-  const nodeSel = g
+  const nodeSel = zoomLayer
     .append("g")
     .selectAll<SVGGElement, FNode>("g.cartographer-node")
     .data(nodes)
@@ -1022,13 +1226,14 @@ function drawNetwork(
     .append("g")
     .attr("class", "cartographer-node")
     .attr("data-company-key", (d) => d.companyKey)
+    .attr("data-size", (d) => groupSize.get(d.companyKey) ?? 2)
     .style("cursor", "pointer")
     .on("click", (_, d) => onSelect(d.companyKey));
 
   nodeSel
     .append("circle")
-    .attr("r", 4)
-    .attr("fill", ACCENT)
+    .attr("r", 5)
+    .attr("fill", (d) => sizeToColor(groupSize.get(d.companyKey) ?? 2))
     .attr("stroke", ACCENT)
     .attr("stroke-width", 1);
 
@@ -1037,7 +1242,7 @@ function drawNetwork(
     .text((d) => `${d.person.fullName} — ${d.companyName}`);
 
   // Company name labels at cluster centroids
-  const labelSel = g
+  const labelSel = zoomLayer
     .append("g")
     .selectAll<SVGTextElement, CompanyNode>("text")
     .data(capped)
@@ -1108,10 +1313,29 @@ function drawNetwork(
     });
   nodeSel.call(drag);
 
-  return simulation as unknown as d3.Simulation<
-    d3.SimulationNodeDatum,
-    undefined
-  >;
+  // Zoom & pan — registered AFTER drag so node-drag takes priority on individual
+  // nodes; zoom kicks in on the background.
+  const zoom = d3
+    .zoom<SVGSVGElement, unknown>()
+    .scaleExtent([0.3, 8])
+    .filter((event) => {
+      // Don't start a zoom-pan when the user is starting a drag on a node
+      const target = event.target as Element | null;
+      if (target && target.closest(".cartographer-node")) return false;
+      return !event.ctrlKey && !event.button;
+    })
+    .on("zoom", (event) => {
+      zoomLayer.attr("transform", event.transform.toString());
+    });
+  svg.call(zoom).on("dblclick.zoom", null);
+
+  return {
+    simulation: simulation as unknown as d3.Simulation<
+      d3.SimulationNodeDatum,
+      undefined
+    >,
+    zoom,
+  };
 }
 
 // ===========================================================================
