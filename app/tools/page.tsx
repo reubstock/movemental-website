@@ -47,9 +47,10 @@ const TOOLS: Tool[] = [
     name: "AUDIENCE",
     subtitle: "Letter → People",
     description:
-      "Once you have the letter, find the people. Amplifier shortlist, network segmentation, profile briefs — all from LinkedIn data you paste or upload.",
+      "Once you have the letter, find the people. Amplifier shortlist, network segmentation, profile briefs — generated from LinkedIn data you paste or upload.",
     accent: "from-navy/10 to-transparent",
     available: true,
+    newTab: true,
   },
 ];
 

@@ -1,26 +1,11 @@
 import Link from "next/link";
+import AudienceTool from "./AudienceTool";
 
 export const metadata = {
   title: "Tools — AUDIENCE | Movementum",
+  description:
+    "Once you have the letter, find the people. Amplifier shortlist, audience segmentation, and per-person profile briefs — streamed from Claude. Local-only inputs.",
 };
-
-const MODES = [
-  {
-    key: "amplifiers",
-    label: "Find amplifiers",
-    body: "Who on LinkedIn is most likely to share or repost this letter? Curated shortlist.",
-  },
-  {
-    key: "segmentation",
-    label: "Analyze my following",
-    body: "Paste or upload your connections. Get clusters, personas, and which segments to lead with.",
-  },
-  {
-    key: "profiles",
-    label: "Profile briefs",
-    body: "Paste profile URLs or content. Get per-person briefs with lead angles and confidence levels.",
-  },
-];
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -31,7 +16,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function AudienceStub() {
+export default function AudiencePage() {
   return (
     <>
       {/* HERO */}
@@ -65,52 +50,17 @@ export default function AudienceStub() {
             Letter <span className="gradient-text">→ People</span>.
           </h1>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-foreground-muted sm:text-xl">
-            Three modes. Find the LinkedIn voices most likely to amplify your
-            letter, segment your existing following, or prepare per-person
-            briefs for a target list. Paste data or upload a file — no
-            LinkedIn login required.
+            Three modes. Find the LinkedIn voices most likely to amplify
+            your letter, segment your existing following, or prepare
+            per-person briefs for a target list. Paste data or upload a
+            text file — no LinkedIn login required.
           </p>
         </div>
       </section>
 
-      {/* MODES PREVIEW */}
+      {/* THE TOOL */}
       <section className="mx-auto w-full max-w-7xl px-6 py-12 sm:py-16">
-        <div className="grid gap-5 md:grid-cols-3">
-          {MODES.map((m, i) => (
-            <article
-              key={m.key}
-              className="rounded-3xl border border-border-default bg-white p-7"
-            >
-              <span className="font-mono text-xs font-medium text-accent-hover">
-                MODE {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-5 text-2xl font-semibold tracking-tight text-navy">
-                {m.label}
-              </h3>
-              <p className="mt-3 text-base leading-7 text-foreground-muted">
-                {m.body}
-              </p>
-            </article>
-          ))}
-        </div>
-
-        <div className="mt-8 rounded-3xl border border-border-default bg-white p-7 sm:p-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-background-soft px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-foreground-subtle">
-            <span className="h-1.5 w-1.5 rounded-full bg-foreground-subtle animate-pulse" />
-            Status · In development
-          </div>
-          <p className="mt-4 text-base leading-7 text-foreground-muted sm:text-lg">
-            We&rsquo;re finishing the working version of AUDIENCE. To run it
-            on a specific letter in the meantime, email{" "}
-            <a
-              href="mailto:reubstock@gmail.com"
-              className="font-medium text-accent-hover hover:underline"
-            >
-              reubstock@gmail.com
-            </a>{" "}
-            with the draft and we&rsquo;ll do the analysis by hand.
-          </p>
-        </div>
+        <AudienceTool />
       </section>
 
       {/* PAIR WITH MATIC */}
@@ -125,9 +75,9 @@ export default function AudienceStub() {
               The letter without an audience is just text on a page.
             </h2>
             <p className="mt-6 text-lg leading-8 text-white/70">
-              Run MATIC first to write the letter, then run AUDIENCE to find
-              the people who can make it travel. Together they collapse the
-              first two weeks of a campaign into an afternoon.
+              Run MATIC first to write the letter, then run AUDIENCE to
+              find the people who can make it travel. Together they
+              collapse the first two weeks of a campaign into an afternoon.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
