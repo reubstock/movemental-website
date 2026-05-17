@@ -13,6 +13,7 @@ type Tool = {
   description: string;
   accent: string;
   available: boolean;
+  newTab?: boolean;
 };
 
 const TOOLS: Tool[] = [
@@ -28,9 +29,21 @@ const TOOLS: Tool[] = [
     available: true,
   },
   {
+    slug: "network",
+    href: "/tools/network",
+    step: "02",
+    name: "CARTOGRAPHER",
+    subtitle: "Connections → Warm Targets",
+    description:
+      "Drop your LinkedIn connections export. See where your network is dense, find companies where you already know someone, and match against any target list. Local-only.",
+    accent: "from-accent/15 to-transparent",
+    available: true,
+    newTab: true,
+  },
+  {
     slug: "audience",
     href: "/tools/audience",
-    step: "02",
+    step: "03",
     name: "AUDIENCE",
     subtitle: "Letter → People",
     description:
@@ -71,11 +84,14 @@ export default function ToolsHub() {
 
       {/* TOOL CARDS */}
       <section className="mx-auto w-full max-w-7xl px-6 py-12 sm:py-16">
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {TOOLS.map((t) => (
             <Link
               key={t.slug}
               href={t.href}
+              {...(t.newTab
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
               className={`group relative overflow-hidden rounded-3xl border border-border-default bg-gradient-to-br ${t.accent} bg-white p-8 transition-all hover:border-accent/40 hover:shadow-lg hover:shadow-navy/5`}
             >
               <div className="flex items-baseline justify-between">
