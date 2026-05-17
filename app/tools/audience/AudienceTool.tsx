@@ -526,7 +526,7 @@ export default function AudienceTool() {
               <div className="mt-5">
                 <LeadForm
                   tool="audience"
-                  ctaLabel="Book a working session on this"
+                  ctaLabel="Have us follow up"
                   intent={`Working session on ${mode} analysis`}
                   getContext={() => output}
                   theme="firstshift"

@@ -497,7 +497,7 @@ export default function NetworkCartographer() {
                 <div className="mt-7">
                   <LeadForm
                     tool="cartographer"
-                    ctaLabel="Help me run outreach to these"
+                    ctaLabel="Have us follow up"
                     intent="Run outreach to warm contacts"
                     getContext={() => formatMatchesForLead(matches)}
                     theme="firstshift"

@@ -325,7 +325,7 @@ export default function MaticPage() {
             <div className="mt-4">
               <LeadForm
                 tool="matic"
-                ctaLabel="Have us refine and launch this letter"
+                ctaLabel="Have us follow up"
                 intent="Refine and launch this letter"
                 getContext={() => letter}
               />
