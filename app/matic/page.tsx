@@ -3,6 +3,9 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import Eyebrow from "../components/Eyebrow";
+import ReferenceDocs, {
+  useReferenceDocs,
+} from "../components/ReferenceDocs";
 
 const INDUSTRIES = [
   "Financial Services",
@@ -67,6 +70,7 @@ const STATUS_META: Record<Status, { dot: string; label: string }> = {
 export default function MaticPage() {
   const [industry, setIndustry] = useState("");
   const [values, setValues] = useState<Record<string, string>>({});
+  const [refDocs, setRefDocs] = useReferenceDocs();
   const [letter, setLetter] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [elapsed, setElapsed] = useState<number | null>(null);
@@ -95,7 +99,15 @@ export default function MaticPage() {
       const res = await fetch("/api/generate-letter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, industry }),
+        body: JSON.stringify({
+          ...values,
+          industry,
+          refDocs: refDocs.map((d) => ({
+            name: d.name,
+            content: d.content,
+            source: d.source,
+          })),
+        }),
         signal: controller.signal,
       });
 
@@ -281,6 +293,11 @@ export default function MaticPage() {
                 </article>
               );
             })}
+          </div>
+
+          {/* REFERENCE DOCS — optional context */}
+          <div className="mt-6">
+            <ReferenceDocs docs={refDocs} setDocs={setRefDocs} />
           </div>
 
           {/* RUN BAR */}

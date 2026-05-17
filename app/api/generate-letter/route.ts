@@ -32,6 +32,12 @@ OUTPUT FORMAT
 
 If an input is empty or weak, infer from the others. Never refuse.`;
 
+type RefDocInput = {
+  name?: string;
+  content?: string;
+  source?: string;
+};
+
 type Body = {
   industry?: string;
   change?: string;
@@ -40,7 +46,11 @@ type Body = {
   why?: string;
   ask?: string;
   audience?: string;
+  refDocs?: RefDocInput[];
 };
+
+const MAX_REF_DOCS = 25;
+const MAX_REF_CHARS_TOTAL = 600_000;
 
 export async function POST(req: Request) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -70,28 +80,53 @@ export async function POST(req: Request) {
     return new Response("Please fill in at least one input.", { status: 400 });
   }
 
-  const userMessage = [
-    "INPUTS",
-    "",
-    industry ? `Industry: ${industry}` : "",
-    `What I want to change: ${change || "(not specified)"}`,
-    `A specific moment that crystallized this: ${moment || "(not specified)"}`,
-    `The unspoken truth: ${unsaid || "(not specified)"}`,
-    `Why this is mine to say: ${why || "(not specified)"}`,
-    `What I want readers to do: ${ask || "(not specified)"}`,
-    audience ? `Audience: ${audience}` : "",
-    "",
-    industry
-      ? `Ground the letter in ${industry}: use that field's vocabulary, name its actual players or recent shifts where it strengthens the case, and write as if a reader inside that industry will recognize themselves immediately. Do not name the industry as a label.`
-      : "",
-    moment
-      ? "If a specific moment is provided, open Beat 1 (the Hook) with that scene — a concrete detail, in the present tense — before pulling out to the larger claim. Letters with a real moment outperform abstract ones; lean on it."
-      : "",
-    "",
-    "Write the letter now. Five paragraphs. 280-420 words. No labels.",
-  ]
-    .filter((l) => l !== "")
-    .join("\n");
+  // Reference docs — cap the total chars sent to keep prompt cost bounded
+  const refDocs = Array.isArray(body.refDocs)
+    ? body.refDocs.slice(0, MAX_REF_DOCS)
+    : [];
+  let refTotal = 0;
+  const refSections: string[] = [];
+  for (const doc of refDocs) {
+    if (!doc?.name || !doc?.content) continue;
+    const room = MAX_REF_CHARS_TOTAL - refTotal;
+    if (room <= 0) break;
+    const content = doc.content.slice(0, room);
+    refTotal += content.length;
+    refSections.push(
+      `--- ${doc.name.trim().slice(0, 200)} ---\n${content.trim()}`
+    );
+  }
+  const refBlock =
+    refSections.length > 0
+      ? `REFERENCE MATERIAL (use to inform tone, voice, and substance — do NOT quote it directly in the output):\n\n${refSections.join(
+          "\n\n"
+        )}\n\n---\n\n`
+      : "";
+
+  const userMessage =
+    refBlock +
+    [
+      "INPUTS",
+      "",
+      industry ? `Industry: ${industry}` : "",
+      `What I want to change: ${change || "(not specified)"}`,
+      `A specific moment that crystallized this: ${moment || "(not specified)"}`,
+      `The unspoken truth: ${unsaid || "(not specified)"}`,
+      `Why this is mine to say: ${why || "(not specified)"}`,
+      `What I want readers to do: ${ask || "(not specified)"}`,
+      audience ? `Audience: ${audience}` : "",
+      "",
+      industry
+        ? `Ground the letter in ${industry}: use that field's vocabulary, name its actual players or recent shifts where it strengthens the case, and write as if a reader inside that industry will recognize themselves immediately. Do not name the industry as a label.`
+        : "",
+      moment
+        ? "If a specific moment is provided, open Beat 1 (the Hook) with that scene — a concrete detail, in the present tense — before pulling out to the larger claim. Letters with a real moment outperform abstract ones; lean on it."
+        : "",
+      "",
+      "Write the letter now. Five paragraphs. 280-420 words. No labels.",
+    ]
+      .filter((l) => l !== "")
+      .join("\n");
 
   const client = new Anthropic({ apiKey });
 
