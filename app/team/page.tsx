@@ -104,7 +104,7 @@ export default function TeamPage() {
             Sometimes the only way forward is{" "}
             <span className="text-brand">looking back.</span>
           </p>
-          <p className="text-lg md:text-xl text-zinc-600 leading-relaxed max-w-3xl mb-12 md:mb-16">
+          <p className="text-lg md:text-xl text-zinc-600 leading-relaxed max-w-3xl">
             The mechanics behind every internet-native movement —{" "}
             <strong className="text-zinc-900">
               Wikipedia, Linux, Bitcoin, Indivisible
@@ -113,20 +113,6 @@ export default function TeamPage() {
             community, a publication of record, and a clear path from reader
             to protagonist. We&rsquo;ve spent two decades refining them.
           </p>
-          <figure className="w-full md:w-[72%] mx-auto">
-            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-md border border-zinc-200 bg-zinc-100">
-              <Image
-                src="/images/the-rig-1999.jpg"
-                alt="The Rig — 1999. Reuben Steiger's early VR / simulation rig."
-                fill
-                sizes="(max-width: 768px) 100vw, 72vw"
-                className="object-cover"
-              />
-            </div>
-            <figcaption className="mt-3 text-[11px] font-extrabold tracking-[0.18em] uppercase text-zinc-500">
-              The rig · 1999
-            </figcaption>
-          </figure>
         </div>
       </section>
 
