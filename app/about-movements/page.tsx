@@ -438,7 +438,7 @@ export default function AboutMovementsPage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-200 border border-zinc-200 rounded-md overflow-hidden">
             {OUTCOMES.map((o) => (
               <div key={o.label} className="bg-white p-6 md:p-7">
-                <div className="text-3xl md:text-5xl font-black text-zinc-900 leading-none mb-3">
+                <div className="text-xl md:text-3xl font-black text-zinc-900 leading-none mb-3">
                   {o.num}
                 </div>
                 <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand mb-1.5">

@@ -6,7 +6,7 @@ const PROOF_POINTS = [
     name: "Second Life",
     src: "/images/second-life-logo.png",
     logoClass: "h-12 md:h-14",
-    body: "As the Evangelist for a small virtual world platform, helped architect a story machine that allowed residents to tell their stories as a narrative that attracted millions.",
+    body: "Designed and built a story machine that allowed residents to tell their stories as a narrative that attracted millions.",
     metric: "Millions of residents at peak",
   },
   {
