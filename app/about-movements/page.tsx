@@ -77,8 +77,8 @@ const BEATS = [
 
 const OUTCOMES = [
   { num: "1", label: "Movement", sub: "Category narrative owned by the client" },
-  { num: "250–1,000", label: "Inbound leads", sub: "From a single open letter" },
   { num: "10k–100k", label: "Impressions", sub: "LinkedIn + amplification" },
+  { num: "250–1,000", label: "Inbound leads", sub: "From a single open letter" },
   { num: "6 mo", label: "Time to authority", sub: "From letter to industry stage" },
 ];
 
