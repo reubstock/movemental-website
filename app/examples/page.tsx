@@ -13,6 +13,47 @@ type Example = {
   metricLabel: string;
 };
 
+const HISTORICAL_MOVEMENTS = [
+  {
+    year: "1517",
+    author: "Martin Luther",
+    title: "95 Theses",
+    movement: "The Reformation",
+    body: "A list of grievances nailed to a church door in Wittenberg. Cheap printing did the rest — within months the document was circulating across Europe.",
+  },
+  {
+    year: "1963",
+    author: "Martin Luther King Jr.",
+    title: "Letter from Birmingham Jail",
+    movement: "American Civil Rights",
+    body: "Written in the margins of a newspaper from a jail cell. The clearest articulation of the moral case behind the movement — and the text mainstream America couldn't unread.",
+  },
+];
+
+const COMMERCIAL_MOVEMENTS = [
+  {
+    year: "2006",
+    author: "Elon Musk",
+    title: "The Secret Tesla Master Plan",
+    movement: "Tesla / Electric Vehicles",
+    body: "A 1,500-word blog post laying out the entire arc — sports car, sedan, mass market — years before the company could deliver any of it. The plan made the company impossible to dismiss as a hobby.",
+  },
+  {
+    year: "2008",
+    author: "Satoshi Nakamoto",
+    title: "Bitcoin: A Peer-to-Peer Electronic Cash System",
+    movement: "Bitcoin / Crypto",
+    body: "Nine pages. No founder visible. The white paper became the founding document of a $1T+ asset class — and the template of every protocol that followed tried to imitate.",
+  },
+  {
+    year: "2005+",
+    author: "Paul Graham",
+    title: "The YC Essays",
+    movement: "Modern Startup Ecosystem",
+    body: "A series of personal essays — \"How to Start a Startup,\" \"Do Things That Don't Scale\" — that built the cultural infrastructure for a generation of founders. The accelerator followed the writing, not the other way around.",
+  },
+];
+
 const EXAMPLES: Example[] = [
   {
     slug: "second-life",
@@ -64,14 +105,81 @@ const EXAMPLES: Example[] = [
 export default function ExamplesPage() {
   return (
     <>
-      {/* HERO */}
+      {/* LETTERS THAT BECAME MOVEMENTS — the lead */}
       <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100">
-        <div className="max-w-5xl mx-auto">
-          <Eyebrow>Examples</Eyebrow>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-zinc-900 leading-[0.98] mb-7 max-w-[18ch]">
-            We&rsquo;ve run this play before.
+        <div className="max-w-6xl mx-auto">
+          <Eyebrow>Letters that became movements</Eyebrow>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight text-zinc-900 leading-[1.02] mb-6 max-w-3xl">
+            The pattern is older than the internet.
           </h1>
-          <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl">
+          <p className="text-lg md:text-xl text-zinc-600 leading-relaxed max-w-3xl mb-12">
+            Almost every successful movement we admire — religious, civic,
+            commercial — began the same way. A single, carefully written
+            document that named what was wrong, then what could come next.
+          </p>
+
+          {/* Historical */}
+          <div className="text-[11px] font-extrabold tracking-[0.18em] uppercase text-zinc-400 mb-4">
+            Historical
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-zinc-200 border border-zinc-200 rounded-md overflow-hidden mb-12">
+            {HISTORICAL_MOVEMENTS.map((m) => (
+              <article
+                key={m.title}
+                className="bg-white p-7 md:p-8 flex flex-col gap-3"
+              >
+                <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand">
+                  {m.year} &middot; {m.author}
+                </div>
+                <h3 className="text-xl md:text-2xl font-black text-zinc-900 leading-tight">
+                  {m.title}
+                </h3>
+                <div className="text-sm font-bold text-zinc-700">
+                  → {m.movement}
+                </div>
+                <p className="text-base text-zinc-600 leading-relaxed mt-1">
+                  {m.body}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          {/* Commercial */}
+          <div className="text-[11px] font-extrabold tracking-[0.18em] uppercase text-zinc-400 mb-4">
+            Commercial
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-zinc-200 border border-zinc-200 rounded-md overflow-hidden">
+            {COMMERCIAL_MOVEMENTS.map((m) => (
+              <article
+                key={m.title}
+                className="bg-white p-7 md:p-8 flex flex-col gap-3"
+              >
+                <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand">
+                  {m.year} &middot; {m.author}
+                </div>
+                <h3 className="text-lg md:text-xl font-black text-zinc-900 leading-tight">
+                  {m.title}
+                </h3>
+                <div className="text-sm font-bold text-zinc-700">
+                  → {m.movement}
+                </div>
+                <p className="text-sm md:text-base text-zinc-600 leading-relaxed mt-1">
+                  {m.body}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* OUR WORK — transition to case studies */}
+      <section className="px-5 md:px-8 py-16 md:py-20 border-b border-zinc-100">
+        <div className="max-w-5xl mx-auto">
+          <Eyebrow>Our work</Eyebrow>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-6 max-w-3xl">
+            We&rsquo;ve run this play before.
+          </h2>
+          <p className="text-lg md:text-xl text-zinc-600 leading-snug max-w-3xl">
             The same sequence — letter, narrative, community, calendar,
             evaluate, expand — has worked across very different clients.
             What changes is the audience, the language, and the unspoken
