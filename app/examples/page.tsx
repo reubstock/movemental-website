@@ -89,7 +89,7 @@ const EXAMPLES: Example[] = [
     slug: "indivisible-no-kings",
     name: "Indivisible · No Kings",
     logoSrc: "/images/no-kings.jpg",
-    logoClass: "h-14 md:h-16 rounded-full",
+    logoClass: "h-[78px] md:h-[90px] rounded-full",
     tag: "Civic Movement",
     headline:
       "Editorial and community infrastructure for one of 2025&rsquo;s fastest-growing civic movements.",
@@ -197,7 +197,7 @@ export default function ExamplesPage() {
               className="bg-white p-7 md:p-12 grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start"
             >
               <div className="flex flex-col gap-4">
-                <div className="h-16 flex items-center">
+                <div className="h-[90px] flex items-center">
                   <img
                     src={ex.logoSrc}
                     alt={ex.name}
