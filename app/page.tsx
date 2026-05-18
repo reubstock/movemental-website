@@ -30,10 +30,6 @@ export default function HomePage() {
           }}
         />
         <div className="relative max-w-6xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-tint border border-[#a8dcf5] text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand" />
-            Movement, not marketing
-          </div>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight text-zinc-900 mb-8 max-w-[16ch]">
             We turn promising ideas into{" "}
             <span className="text-brand">global movements.</span>
