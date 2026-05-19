@@ -1,4 +1,5 @@
 import Eyebrow from "../components/Eyebrow";
+import EngageForm from "../components/EngageForm";
 
 const TERMS = [
   {
@@ -92,33 +93,33 @@ export default function EngagePage() {
         </div>
       </section>
 
-{/* CONTACT CTA */}
-      <section id="contact" className="px-5 md:px-8 py-24 md:py-28 bg-[#0f0f10] text-white scroll-mt-20">
-        <div className="max-w-3xl mx-auto text-center">
-          <Eyebrow className="text-[#5dd0f5]">Get in touch</Eyebrow>
-          <h2 className="text-4xl md:text-6xl font-black tracking-tight leading-[1.02] mb-6">
+      {/* CONTACT FORM */}
+      <section
+        id="contact"
+        className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100 bg-[#fafaf8] scroll-mt-20"
+      >
+        <div className="max-w-3xl mx-auto">
+          <Eyebrow>Get in touch</Eyebrow>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-5">
             Tell us what you&rsquo;re trying to build.
           </h2>
-          <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-10 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-zinc-600 leading-relaxed mb-8 max-w-2xl">
             We&rsquo;ll tell you whether the Open Letter is the right shape
             for it — and what the first ninety days would look like.
           </p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <a
-              href="mailto:reubstock@gmail.com?subject=Movementum%20—%20New%20Engagement"
-              className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
-            >
-              reubstock@gmail.com
-            </a>
+          <EngageForm />
+          <p className="mt-6 text-sm text-zinc-500">
+            Or message Reuben on{" "}
             <a
               href="https://www.linkedin.com/in/reubensteiger/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center border border-white/25 hover:border-white text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
+              className="font-semibold text-zinc-900 underline underline-offset-2 hover:text-brand"
             >
-              LinkedIn ↗
+              LinkedIn
             </a>
-          </div>
+            .
+          </p>
         </div>
       </section>
     </>

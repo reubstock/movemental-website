@@ -6,11 +6,12 @@ export const dynamic = "force-dynamic";
 const LEAD_TO = "reubstock@gmail.com";
 const LEAD_FROM = "Movementum Lead <onboarding@resend.dev>";
 
-type Tool = "matic" | "cartographer" | "audience";
+type Tool = "matic" | "cartographer" | "audience" | "engage";
 
 type Body = {
   tool?: Tool;
   name?: string;
+  organization?: string;
   email?: string;
   message?: string;
   context?: string; // the tool output (letter / matches / analysis)
@@ -21,6 +22,7 @@ const TOOL_LABELS: Record<Tool, string> = {
   matic: "MATIC",
   cartographer: "CARTOGRAPHER",
   audience: "AUDIENCE",
+  engage: "ENGAGE",
 };
 
 function isValidEmail(s: string): boolean {
@@ -57,11 +59,17 @@ export async function POST(req: Request) {
   }
 
   const tool = body.tool;
-  if (tool !== "matic" && tool !== "cartographer" && tool !== "audience") {
+  if (
+    tool !== "matic" &&
+    tool !== "cartographer" &&
+    tool !== "audience" &&
+    tool !== "engage"
+  ) {
     return Response.json({ error: "Unknown tool." }, { status: 400 });
   }
 
   const name = (body.name || "").trim();
+  const organization = (body.organization || "").trim();
   const email = (body.email || "").trim();
   const message = (body.message || "").trim();
   const context = (body.context || "").trim();
@@ -78,16 +86,20 @@ export async function POST(req: Request) {
   }
 
   const toolLabel = TOOL_LABELS[tool];
-  const subject = `[${toolLabel}] Lead from ${name}`;
+  const subject =
+    tool === "engage" && organization
+      ? `[ENGAGE] ${name} · ${organization}`
+      : `[${toolLabel}] Lead from ${name}`;
 
   // Plain-text body (always works)
   const textLines: string[] = [
     `New lead from ${toolLabel} on movemental-website.vercel.app`,
     "",
-    `Name:    ${name}`,
-    `Email:   ${email}`,
+    `Name:         ${name}`,
   ];
-  if (intent) textLines.push(`Intent:  ${intent}`);
+  if (organization) textLines.push(`Organization: ${organization}`);
+  textLines.push(`Email:        ${email}`);
+  if (intent) textLines.push(`Intent:       ${intent}`);
   if (message) {
     textLines.push("", "Message:", message);
   }
@@ -105,7 +117,7 @@ export async function POST(req: Request) {
   const html = `<!doctype html>
 <html><body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif; color:#18181b; max-width: 640px; margin: 0 auto; padding: 24px; line-height:1.55;">
   <p style="font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#0891b2; font-weight:bold;">${toolLabel} · NEW LEAD</p>
-  <h2 style="margin:8px 0 16px; font-size:24px; line-height:1.2;">${escapeHtml(name)}</h2>
+  <h2 style="margin:8px 0 16px; font-size:24px; line-height:1.2;">${escapeHtml(name)}${organization ? ` <span style=\"color:#71717a; font-weight:normal;\">·</span> <span style=\"color:#475569; font-weight:normal;\">${escapeHtml(organization)}</span>` : ""}</h2>
   <p style="margin:4px 0; color:#475569;"><strong>Email:</strong> <a href="mailto:${escapeHtml(email)}" style="color:#0891b2; text-decoration:none;">${escapeHtml(email)}</a></p>
   ${intent ? `<p style="margin:4px 0; color:#475569;"><strong>Intent:</strong> ${escapeHtml(intent)}</p>` : ""}
   ${message ? `<div style="margin-top:16px; padding:12px 16px; background:#fafaf8; border-radius:8px; border-left:3px solid #0891b2;"><div style="font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#0891b2; font-weight:bold; margin-bottom:6px;">MESSAGE</div><div style="white-space:pre-wrap; color:#18181b;">${escapeHtml(message)}</div></div>` : ""}
