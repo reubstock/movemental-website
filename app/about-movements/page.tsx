@@ -266,115 +266,65 @@ export default function AboutMovementsPage() {
         </div>
       </section>
 
-      {/* FORMULA */}
-      <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100">
-        <div className="max-w-5xl mx-auto">
-          <Eyebrow>After the Letter — The Movementum Formula</Eyebrow>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-6 max-w-3xl">
-            Three steps. <span className="text-brand">That&rsquo;s it.</span>
-          </h2>
-          <p className="text-lg md:text-xl text-zinc-600 leading-relaxed max-w-3xl mb-12">
-            The letter establishes the category. The formula sustains it.
-            We&rsquo;ve run this same sequence for commercial media labs,
-            venture-backed startups, and civic movements. The tactics adapt
-            to the client; the sequence does not.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              {
-                n: "01",
-                title: "Build Story Machine.",
-                body: "A publication, a cadence, a voice. The infrastructure that turns ongoing work into ongoing narrative.",
-              },
-              {
-                n: "02",
-                title: "Cast the Drama.",
-                body: "Personalities, founders, builders, dissenters. The anthropologist's posture: surface them, co-create the mythology, broadcast outward.",
-              },
-              {
-                n: "03",
-                title: "Share / Repeat.",
-                body: "Distribute deliberately. Watch what resonates. Sharpen, syndicate, and run it back. Compounding takes care of the rest.",
-              },
-            ].map((s) => (
-              <div
-                key={s.n}
-                className="border border-zinc-200 rounded-md p-7 flex flex-col gap-3"
-              >
-                <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand">
-                  {s.n}
-                </div>
-                <div className="text-2xl font-black text-zinc-900 leading-tight">
-                  {s.title}
-                </div>
-                <p className="text-sm md:text-base text-zinc-600 leading-snug">
-                  {s.body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* OUTCOMES */}
+      {/* STACK + OUTCOMES — combined closing section */}
       <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100 bg-[#fafaf8]">
         <div className="max-w-6xl mx-auto">
-          <Eyebrow>What it produces</Eyebrow>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-5 max-w-3xl">
-            Strong editorial movements move markets — and pipelines.
-          </h2>
-          <p className="text-lg md:text-xl text-zinc-600 leading-relaxed max-w-3xl mb-10">
-            Benchmarks from dozens of prior campaigns we&rsquo;ve executed
-            using this same framework.
-          </p>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-200 border border-zinc-200 rounded-md overflow-hidden">
-            {OUTCOMES.map((o) => (
-              <div key={o.label} className="bg-white p-6 md:p-7">
-                <div className="text-xl md:text-3xl font-black text-zinc-900 leading-none mb-3">
-                  {o.num}
-                </div>
-                <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand mb-1.5">
-                  {o.label}
-                </div>
-                <div className="text-sm text-zinc-500 leading-snug">
-                  {o.sub}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* THE STACK */}
-      <section className="px-5 md:px-8 py-20 md:py-24 border-b border-zinc-100">
-        <div className="max-w-6xl mx-auto">
-          <Eyebrow>The stack</Eyebrow>
+          <Eyebrow>The stack &amp; the receipts</Eyebrow>
           <h2 className="text-3xl md:text-5xl font-black tracking-tight text-zinc-900 leading-[1.05] mb-6 max-w-3xl">
-            Off-the-shelf platforms.{" "}
-            <span className="text-brand">Used deliberately.</span>
+            What we build with.{" "}
+            <span className="text-brand">What you get.</span>
           </h2>
           <p className="text-lg md:text-xl text-zinc-600 leading-relaxed max-w-3xl mb-12">
-            Every movement we&rsquo;ve helped build runs on a small,
-            deliberate stack. No custom CMS, no bespoke software, no
-            platform play. The leverage is editorial — not technical.
+            Off-the-shelf platforms, used deliberately. Benchmarks from
+            dozens of prior campaigns we&rsquo;ve executed using this same
+            framework.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-zinc-200 border border-zinc-200 rounded-md overflow-hidden">
-            {STACK.map((p) => (
-              <article
-                key={p.name}
-                className="bg-white p-7 md:p-9 flex flex-col gap-3 min-h-[200px]"
-              >
-                <div className="text-[11px] font-extrabold tracking-[0.16em] uppercase text-brand">
-                  {p.role}
+
+          {/* STACK */}
+          <div className="mb-10">
+            <div className="text-[10px] font-mono font-bold tracking-[0.18em] uppercase text-zinc-500 mb-4">
+              Stack
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-200 border border-zinc-200 rounded-md overflow-hidden">
+              {STACK.map((p) => (
+                <article
+                  key={p.name}
+                  className="bg-white p-5 md:p-6 flex flex-col gap-2 min-h-[170px]"
+                >
+                  <div className="text-[10px] font-mono font-bold tracking-[0.18em] uppercase text-brand">
+                    {p.role}
+                  </div>
+                  <h3 className="text-lg md:text-xl font-black text-zinc-900 leading-tight">
+                    {p.name}
+                  </h3>
+                  <p className="text-sm text-zinc-600 leading-snug">
+                    {p.body}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          {/* OUTCOMES */}
+          <div>
+            <div className="text-[10px] font-mono font-bold tracking-[0.18em] uppercase text-zinc-500 mb-4">
+              Outcomes
+            </div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-zinc-200 border border-zinc-200 rounded-md overflow-hidden">
+              {OUTCOMES.map((o) => (
+                <div key={o.label} className="bg-white p-5 md:p-6">
+                  <div className="text-xl md:text-3xl font-black text-zinc-900 leading-none mb-3">
+                    {o.num}
+                  </div>
+                  <div className="text-[10px] font-mono font-bold tracking-[0.18em] uppercase text-brand mb-1.5">
+                    {o.label}
+                  </div>
+                  <div className="text-xs md:text-sm text-zinc-500 leading-snug">
+                    {o.sub}
+                  </div>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-black text-zinc-900 leading-tight">
-                  {p.name}
-                </h3>
-                <p className="text-base text-zinc-600 leading-relaxed mt-1">
-                  {p.body}
-                </p>
-              </article>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>

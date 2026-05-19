@@ -73,14 +73,25 @@ export default function ReferenceDocs({
   setDocs: (docs: RefDoc[]) => void;
 }) {
   const [adding, setAdding] = useState(false);
-  const [mode, setMode] = useState<"gdoc" | "text" | "file">("gdoc");
   const [gdocUrl, setGdocUrl] = useState("");
   const [textName, setTextName] = useState("");
   const [textBody, setTextBody] = useState("");
   const [fileBusy, setFileBusy] = useState(false);
   const [busy, setBusy] = useState(false);
   const [opError, setOpError] = useState<string | null>(null);
+  const [showUrl, setShowUrl] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  async function handleSave() {
+    if (textBody.trim()) {
+      await handleAddText();
+    } else if (gdocUrl.trim()) {
+      await handleAddGdoc();
+    } else {
+      setOpError("Drop a file, paste text, or add a Google Doc URL.");
+    }
+  }
 
   const totalChars = useMemo(
     () => docs.reduce((acc, d) => acc + d.content.length, 0),
@@ -308,31 +319,109 @@ export default function ReferenceDocs({
         </button>
       ) : (
         <div className="mt-5 rounded-xl border border-zinc-200 bg-zinc-50 p-5">
-          <div className="flex flex-wrap gap-2">
-            {(["gdoc", "file", "text"] as const).map((m) => (
-              <button
-                key={m}
-                type="button"
-                onClick={() => {
-                  setMode(m);
-                  setOpError(null);
-                }}
-                className={`rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${
-                  mode === m
-                    ? "bg-zinc-900 text-white"
-                    : "border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50"
-                }`}
-              >
-                {m === "gdoc"
-                  ? "Google Docs URL"
-                  : m === "file"
-                    ? "Upload file"
-                    : "Paste text"}
-              </button>
-            ))}
+          {/* DROP ZONE — primary affordance */}
+          <label
+            htmlFor="refdoc-file"
+            onDragEnter={(e) => {
+              e.preventDefault();
+              setDragOver(true);
+            }}
+            onDragOver={(e) => {
+              e.preventDefault();
+              setDragOver(true);
+            }}
+            onDragLeave={(e) => {
+              e.preventDefault();
+              setDragOver(false);
+            }}
+            onDrop={(e) => {
+              e.preventDefault();
+              setDragOver(false);
+              const f = e.dataTransfer.files?.[0];
+              if (f) handleFileChosen(f);
+            }}
+            className={`flex flex-col items-center justify-center rounded-lg border-2 border-dashed bg-white px-5 py-8 text-center cursor-pointer transition-colors ${
+              dragOver
+                ? "border-brand bg-brand-tint"
+                : "border-zinc-300 hover:border-brand"
+            }`}
+          >
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-zinc-400"
+              aria-hidden
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            <div className="mt-3 text-sm font-semibold text-zinc-900">
+              Drop a file or click to upload
+            </div>
+            <div className="mt-1 text-xs text-zinc-500">
+              PDF · Word · TXT · MD · CSV · 15 MB max
+            </div>
+            <input
+              id="refdoc-file"
+              ref={fileInputRef}
+              type="file"
+              accept=".pdf,.docx,.txt,.md,.markdown,.csv,.tsv,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,text/markdown,text/csv"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) handleFileChosen(f);
+              }}
+              disabled={fileBusy}
+              className="hidden"
+            />
+          </label>
+          {fileBusy && (
+            <p className="mt-2 text-center font-mono text-xs text-brand">
+              Parsing file…
+            </p>
+          )}
+
+          {/* DIVIDER */}
+          <div className="my-5 flex items-center gap-3 text-[10px] font-mono font-bold tracking-[0.18em] uppercase text-zinc-400">
+            <div className="flex-1 border-t border-zinc-200" />
+            Or paste text
+            <div className="flex-1 border-t border-zinc-200" />
           </div>
 
-          {mode === "gdoc" ? (
+          {/* PASTE */}
+          <div className="space-y-3">
+            <input
+              type="text"
+              value={textName}
+              onChange={(e) => setTextName(e.target.value)}
+              placeholder="Document name (e.g. Brand voice notes)"
+              className="w-full rounded-md border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-brand focus:outline-none transition-colors"
+            />
+            <textarea
+              rows={5}
+              value={textBody}
+              onChange={(e) => setTextBody(e.target.value)}
+              placeholder="Paste the text…"
+              className="w-full resize-y rounded-md border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-brand focus:outline-none transition-colors"
+            />
+          </div>
+
+          {/* GOOGLE DOC URL (collapsed by default) */}
+          {!showUrl ? (
+            <button
+              type="button"
+              onClick={() => setShowUrl(true)}
+              className="mt-3 text-xs font-mono font-bold tracking-[0.18em] uppercase text-zinc-500 hover:text-brand transition-colors"
+            >
+              + Or add from a Google Docs URL
+            </button>
+          ) : (
             <div className="mt-4">
               <label className="block text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-zinc-500">
                 Public Google Docs URL
@@ -342,65 +431,11 @@ export default function ReferenceDocs({
                 value={gdocUrl}
                 onChange={(e) => setGdocUrl(e.target.value)}
                 placeholder="https://docs.google.com/document/d/.../edit"
-                className="mt-2 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-brand focus:outline-none"
+                className="mt-2 w-full rounded-md border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-brand focus:outline-none transition-colors"
               />
               <p className="mt-1.5 text-xs text-zinc-500">
-                The doc must be shared &ldquo;Anyone with the link · Viewer&rdquo;
-                (no Google sign-in required to add it).
+                Must be shared &ldquo;Anyone with the link · Viewer.&rdquo;
               </p>
-            </div>
-          ) : mode === "file" ? (
-            <div className="mt-4">
-              <label className="block text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-zinc-500">
-                Upload PDF, Word, text, markdown, or CSV
-              </label>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept=".pdf,.docx,.txt,.md,.markdown,.csv,.tsv,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,text/markdown,text/csv"
-                onChange={(e) => {
-                  const f = e.target.files?.[0];
-                  if (f) handleFileChosen(f);
-                }}
-                disabled={fileBusy}
-                className="mt-2 block w-full text-sm text-zinc-600 file:mr-4 file:rounded-full file:border-0 file:bg-zinc-900 file:px-5 file:py-2.5 file:text-xs file:font-mono file:font-bold file:uppercase file:tracking-[0.18em] file:text-white file:transition-colors hover:file:bg-brand disabled:cursor-not-allowed disabled:opacity-40"
-              />
-              {fileBusy && (
-                <p className="mt-2 font-mono text-xs text-brand">
-                  Parsing file…
-                </p>
-              )}
-              <p className="mt-1.5 text-xs text-zinc-500">
-                Max 15 MB. PDFs need selectable text — scanned image-only
-                PDFs won&rsquo;t work.
-              </p>
-            </div>
-          ) : (
-            <div className="mt-4 space-y-3">
-              <div>
-                <label className="block text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-zinc-500">
-                  Document name
-                </label>
-                <input
-                  type="text"
-                  value={textName}
-                  onChange={(e) => setTextName(e.target.value)}
-                  placeholder="e.g. Brand voice notes"
-                  className="mt-2 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-brand focus:outline-none"
-                />
-              </div>
-              <div>
-                <label className="block text-[10px] font-mono font-bold uppercase tracking-[0.18em] text-zinc-500">
-                  Content
-                </label>
-                <textarea
-                  rows={6}
-                  value={textBody}
-                  onChange={(e) => setTextBody(e.target.value)}
-                  placeholder="Paste the text…"
-                  className="mt-2 w-full resize-y rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-brand focus:outline-none"
-                />
-              </div>
             </div>
           )}
 
@@ -408,22 +443,21 @@ export default function ReferenceDocs({
             <p className="mt-3 text-xs text-red-600">{opError}</p>
           )}
 
-          <div className="mt-4 flex flex-wrap items-center gap-3">
-            {mode !== "file" && (
-              <button
-                type="button"
-                onClick={mode === "gdoc" ? handleAddGdoc : handleAddText}
-                disabled={busy}
-                className="inline-flex items-center rounded-full bg-zinc-900 px-5 py-2.5 text-xs font-mono font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-brand disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                {busy ? "Saving…" : "Save document"}
-              </button>
-            )}
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={busy || fileBusy}
+              className="inline-flex items-center rounded-full bg-zinc-900 px-5 py-2.5 text-xs font-mono font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-brand disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {busy ? "Saving…" : "Save document"}
+            </button>
             <button
               type="button"
               onClick={() => {
                 setAdding(false);
                 resetForm();
+                setShowUrl(false);
               }}
               disabled={busy || fileBusy}
               className="inline-flex items-center rounded-full border border-zinc-200 bg-white px-5 py-2.5 text-xs font-mono font-bold uppercase tracking-[0.18em] text-zinc-500 transition-colors hover:border-zinc-900 hover:text-zinc-900 disabled:cursor-not-allowed disabled:opacity-40"
