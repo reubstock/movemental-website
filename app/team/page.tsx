@@ -120,10 +120,10 @@ export default function TeamPage() {
       <section className="px-5 md:px-8 py-16 border-b border-zinc-100 bg-[#fafaf8]">
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row gap-3">
           <a
-            href="mailto:reubstock@gmail.com"
+            href="/engage#contact"
             className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3 text-base font-extrabold tracking-wide rounded transition-colors"
           >
-            reubstock@gmail.com
+            Get in touch
           </a>
           <a
             href="https://www.linkedin.com/in/reubensteiger/"
@@ -131,7 +131,7 @@ export default function TeamPage() {
             rel="noopener noreferrer"
             className="inline-flex items-center border border-zinc-300 hover:border-zinc-900 text-zinc-900 px-7 py-3 text-base font-extrabold tracking-wide rounded transition-colors"
           >
-            linkedin.com/in/reubensteiger
+            LinkedIn ↗
           </a>
         </div>
       </section>
@@ -148,7 +148,7 @@ export default function TeamPage() {
             is signed.
           </p>
           <a
-            href="mailto:reubstock@gmail.com"
+            href="/engage#contact"
             className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
           >
             Get in touch

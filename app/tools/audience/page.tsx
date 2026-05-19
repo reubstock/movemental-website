@@ -101,7 +101,7 @@ export default function AudiencePage() {
                 </svg>
               </Link>
               <a
-                href="mailto:reubstock@gmail.com?subject=Movementum%20%E2%80%94%20AUDIENCE"
+                href="/engage#contact"
                 className="inline-flex h-12 items-center rounded-full border border-white/20 bg-white/5 px-6 text-sm font-medium text-white transition-all hover:bg-white/10"
               >
                 Get in touch

@@ -189,7 +189,7 @@ export default function HomePage() {
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <a
-              href="mailto:reubstock@gmail.com"
+              href="/engage#contact"
               className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
             >
               Get in touch

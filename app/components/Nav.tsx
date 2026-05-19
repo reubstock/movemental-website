@@ -58,7 +58,7 @@ export default function Nav() {
         </nav>
 
         <a
-          href="mailto:reubstock@gmail.com"
+          href="/engage#contact"
           className="hidden md:inline-flex items-center bg-zinc-900 hover:bg-brand text-white text-xs font-extrabold tracking-wide uppercase px-4 py-2 rounded-full ml-auto transition-colors"
         >
           Get in touch
