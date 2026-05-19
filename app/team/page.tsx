@@ -50,10 +50,27 @@ export default function TeamPage() {
                 Movement Builder <span className="text-zinc-300">||</span>{" "}
                 Writer
               </p>
-              <p className="text-lg md:text-xl text-zinc-600 leading-snug max-w-2xl">
+              <p className="text-lg md:text-xl text-zinc-600 leading-snug max-w-2xl mb-6">
                 Two decades turning promising ideas into global movements —
                 from Fortune 500 media labs to civic organizing.
               </p>
+              <a
+                href="https://www.linkedin.com/in/reubensteiger/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-brand hover:bg-[#0091c2] text-white px-6 py-3 text-sm font-extrabold tracking-wide rounded transition-colors"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46C23.21 24 24 23.23 24 22.28V1.72C24 .77 23.21 0 22.23 0z" />
+                </svg>
+                LinkedIn profile ↗
+              </a>
             </div>
           </div>
         </div>
@@ -116,45 +133,6 @@ export default function TeamPage() {
         </div>
       </section>
 
-      {/* CONTACT LINKS */}
-      <section className="px-5 md:px-8 py-16 border-b border-zinc-100 bg-[#fafaf8]">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row gap-3">
-          <a
-            href="/engage#contact"
-            className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3 text-base font-extrabold tracking-wide rounded transition-colors"
-          >
-            Get in touch
-          </a>
-          <a
-            href="https://www.linkedin.com/in/reubensteiger/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center border border-zinc-300 hover:border-zinc-900 text-zinc-900 px-7 py-3 text-base font-extrabold tracking-wide rounded transition-colors"
-          >
-            LinkedIn ↗
-          </a>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="px-5 md:px-8 py-20 md:py-24 bg-[#0f0f10] text-white">
-        <div className="max-w-3xl mx-auto text-center">
-          <Eyebrow className="text-[#5dd0f5]">Engage</Eyebrow>
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.05] mb-5">
-            Ready to start?
-          </h2>
-          <p className="text-lg text-white/70 leading-relaxed mb-8">
-            Most engagements run six months and start as soon as the contract
-            is signed.
-          </p>
-          <a
-            href="/engage#contact"
-            className="inline-flex items-center bg-brand hover:bg-[#0091c2] text-white px-7 py-3.5 text-base font-extrabold tracking-wide rounded transition-colors"
-          >
-            Get in touch
-          </a>
-        </div>
-      </section>
     </>
   );
 }
