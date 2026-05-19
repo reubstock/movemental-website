@@ -46,9 +46,7 @@ export default function TeamPage() {
                 Reuben Steiger.
               </h1>
               <p className="text-xl md:text-2xl font-semibold text-zinc-900 mb-4">
-                Entrepreneur <span className="text-zinc-300">||</span>{" "}
-                Movement Builder <span className="text-zinc-300">||</span>{" "}
-                Writer
+                CEO
               </p>
               <p className="text-lg md:text-xl text-zinc-600 leading-snug max-w-2xl mb-6">
                 Two decades turning promising ideas into global movements —
