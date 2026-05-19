@@ -92,23 +92,13 @@ export default function AboutMovementsPage() {
           <h1 className="text-5xl md:text-7xl font-black tracking-tight text-zinc-900 leading-[0.98] mb-7 max-w-[18ch]">
             It begins with one letter.
           </h1>
-          <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl">
-            Most of our engagements start the same way: a single,
-            category-defining{" "}
-            <strong className="text-zinc-900">Open Letter</strong>, published
-            from a client&rsquo;s leadership, that frames the world they
-            want to build. It is short by design — a page and a half — and
-            almost always the most consequential thing the organization
-            will publish that year.
-          </p>
-          <p className="text-lg md:text-xl text-zinc-700 leading-snug max-w-3xl mt-5">
-            The letter is the anthem.{" "}
-            <span className="text-brand font-semibold">
-              Everything else amplifies it.
-            </span>{" "}
-            Once published, it feeds a six-month program that turns a
-            single piece of writing into a category, a community, and a
-            pipeline.
+          <p className="text-lg md:text-xl text-zinc-600 leading-relaxed max-w-3xl">
+            Most engagements start with one category-defining{" "}
+            <strong className="text-zinc-900">Open Letter</strong> — published
+            from a client&rsquo;s leadership, short by design, and almost
+            always the most consequential thing they&rsquo;ll publish that
+            year. It feeds a six-month program that turns one piece of
+            writing into a category, a community, and a pipeline.
           </p>
         </div>
       </section>
