@@ -318,12 +318,12 @@ export default function NetworkCartographer() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden border-b border-border-default">
-        <div className="absolute inset-0 gradient-mesh" />
+      <section className="relative overflow-hidden border-b border-zinc-200">
+        <div className="absolute inset-0 hidden" />
         <div className="relative mx-auto w-full max-w-7xl px-6 pt-14 pb-12 sm:pt-20 sm:pb-16">
           <a
             href="/tools"
-            className="inline-flex items-center gap-1 text-xs font-medium uppercase tracking-wider text-foreground-subtle hover:text-navy"
+            className="inline-flex items-center gap-1 text-xs font-medium uppercase tracking-wider text-zinc-500 hover:text-zinc-900"
           >
             <svg
               width="12"
@@ -344,10 +344,10 @@ export default function NetworkCartographer() {
           <div className="mt-3">
             <Eyebrow>Tools · CARTOGRAPHER</Eyebrow>
           </div>
-          <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-tight text-navy sm:text-5xl md:text-6xl">
-            Connections <span className="gradient-text">→ Warm Targets</span>.
+          <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-tight text-zinc-900 sm:text-5xl md:text-6xl">
+            Connections <span className="text-brand">→ Warm Targets</span>.
           </h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-foreground-muted sm:text-xl">
+          <p className="mt-6 max-w-3xl text-lg leading-8 text-zinc-600 sm:text-xl">
             Drop in your LinkedIn connections export. See where your network
             is dense, find the companies where you already know someone, and
             match against any target list — all in your browser. Nothing
@@ -370,8 +370,8 @@ export default function NetworkCartographer() {
         ) : (
           <>
             {/* STATS */}
-            <div className="rounded-3xl border border-border-default bg-white p-6 sm:p-7">
-              <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-border-default sm:grid-cols-4">
+            <div className="rounded-lg border border-zinc-200 bg-white p-6 sm:p-7">
+              <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-zinc-200 sm:grid-cols-4">
                 <Stat
                   label="Connections"
                   value={result.totalConnections.toLocaleString()}
@@ -395,13 +395,13 @@ export default function NetworkCartographer() {
                 />
               </div>
               <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-                <p className="text-sm text-foreground-subtle">
+                <p className="text-sm text-zinc-500">
                   Processed locally. No upload, no analytics.
                 </p>
                 <button
                   type="button"
                   onClick={reset}
-                  className="text-xs font-medium uppercase tracking-wider text-foreground-subtle hover:text-navy"
+                  className="text-xs font-medium uppercase tracking-wider text-zinc-500 hover:text-zinc-900"
                 >
                   Clear &amp; start over
                 </button>
@@ -410,13 +410,13 @@ export default function NetworkCartographer() {
 
             {/* CHART + SIDE PANEL */}
             <div className="mt-8 grid gap-5 lg:grid-cols-[1fr_360px]">
-              <div className="rounded-3xl border border-border-default bg-white p-6 sm:p-7">
+              <div className="rounded-lg border border-zinc-200 bg-white p-6 sm:p-7">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <span className="font-mono text-xs font-medium text-accent-hover">
+                    <span className="font-mono text-xs font-medium text-brand">
                       THE NETWORK
                     </span>
-                    <h2 className="mt-1 text-xl font-semibold tracking-tight text-navy sm:text-2xl">
+                    <h2 className="mt-1 text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
                       Companies where you know 2 or more
                     </h2>
                   </div>
@@ -425,7 +425,7 @@ export default function NetworkCartographer() {
 
                 <div
                   ref={chartContainerRef}
-                  className="relative mt-5 w-full overflow-hidden rounded-2xl border border-border-default bg-background-soft"
+                  className="relative mt-5 w-full overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-50"
                   style={{ minHeight: 560 }}
                 >
                   <svg ref={svgRef} width="100%" height={560} />
@@ -451,14 +451,14 @@ export default function NetworkCartographer() {
 
                   {/* Hint — bottom-left overlay */}
                   <div className="absolute bottom-3 left-3 rounded-md bg-white/90 px-2.5 py-1 backdrop-blur-sm">
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-foreground-subtle">
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
                       scroll · pinch · drag to pan
                     </span>
                   </div>
                 </div>
 
                 {/* Size legend + caption */}
-                <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-foreground-subtle">
+                <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-zinc-500">
                   <span className="font-mono font-bold tracking-wider uppercase">
                     Size
                   </span>
@@ -470,14 +470,14 @@ export default function NetworkCartographer() {
                         className="inline-flex items-center gap-1.5"
                       >
                         <span
-                          className="inline-block h-3 w-3 rounded-full border border-accent/30"
+                          className="inline-block h-3 w-3 rounded-full border border-brand/30"
                           style={{ background: t.color }}
                           aria-hidden
                         />
                         {t.label}
                       </span>
                     ))}
-                  <span className="inline-flex items-center gap-1.5 border-l border-border-default pl-3">
+                  <span className="inline-flex items-center gap-1.5 border-l border-zinc-200 pl-3">
                     <span
                       className="inline-block h-3 w-3 rounded-full border-2"
                       style={{ borderColor: SELECTED }}
@@ -487,7 +487,7 @@ export default function NetworkCartographer() {
                   </span>
                 </div>
 
-                <p className="mt-2 text-xs text-foreground-subtle">
+                <p className="mt-2 text-xs text-zinc-500">
                   {view === "map" ? (
                     <>
                       Each circle is a company. Size = how many people you
@@ -514,27 +514,27 @@ export default function NetworkCartographer() {
             </div>
 
             {/* TOP COMPANIES TABLE */}
-            <div className="mt-8 rounded-3xl border border-border-default bg-white p-6 sm:p-7">
-              <span className="font-mono text-xs font-medium text-accent-hover">
+            <div className="mt-8 rounded-lg border border-zinc-200 bg-white p-6 sm:p-7">
+              <span className="font-mono text-xs font-medium text-brand">
                 TOP 30
               </span>
-              <h2 className="mt-1 text-xl font-semibold tracking-tight text-navy sm:text-2xl">
+              <h2 className="mt-1 text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
                 Where your network is densest
               </h2>
-              <div className="mt-5 grid grid-cols-1 gap-px overflow-hidden rounded-2xl bg-border-default sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-5 grid grid-cols-1 gap-px overflow-hidden rounded-2xl bg-zinc-200 sm:grid-cols-2 lg:grid-cols-3">
                 {multiCompanies.slice(0, 30).map((g) => (
                   <button
                     key={g.key}
                     type="button"
                     onClick={() => setSelectedKey(g.key)}
-                    className={`flex items-baseline justify-between gap-4 bg-white px-4 py-3 text-left transition-colors hover:bg-accent-soft ${
-                      selectedKey === g.key ? "bg-accent-soft" : ""
+                    className={`flex items-baseline justify-between gap-4 bg-white px-4 py-3 text-left transition-colors hover:bg-brand-tint ${
+                      selectedKey === g.key ? "bg-brand-tint" : ""
                     }`}
                   >
-                    <span className="truncate text-sm font-medium text-navy">
+                    <span className="truncate text-sm font-medium text-zinc-900">
                       {g.name}
                     </span>
-                    <span className="font-mono text-xs font-medium text-accent-hover">
+                    <span className="font-mono text-xs font-medium text-brand">
                       {g.people.length}
                     </span>
                   </button>
@@ -543,14 +543,14 @@ export default function NetworkCartographer() {
             </div>
 
             {/* TARGET MATCHER */}
-            <div className="mt-8 rounded-3xl border border-border-default bg-white p-6 sm:p-7">
-              <span className="font-mono text-xs font-medium text-accent-hover">
+            <div className="mt-8 rounded-lg border border-zinc-200 bg-white p-6 sm:p-7">
+              <span className="font-mono text-xs font-medium text-brand">
                 THE PROSPECTOR
               </span>
-              <h2 className="mt-1 text-xl font-semibold tracking-tight text-navy sm:text-2xl">
+              <h2 className="mt-1 text-xl font-semibold tracking-tight text-zinc-900 sm:text-2xl">
                 Match against a target list
               </h2>
-              <p className="mt-3 max-w-3xl text-base leading-7 text-foreground-muted">
+              <p className="mt-3 max-w-3xl text-base leading-7 text-zinc-600">
                 Paste a list of target companies (one per line). For each
                 one, we&rsquo;ll show the people in your network who work
                 there. Fuzzy-matched on common variants (Stripe ≈ Stripe
@@ -565,14 +565,14 @@ export default function NetworkCartographer() {
                   placeholder={
                     "Acme Corp\nNorthwind Logistics\nStripe\nAnthropic\n…"
                   }
-                  className="w-full resize-y rounded-2xl border border-border-default bg-white px-4 py-3 text-sm leading-6 text-navy placeholder:text-foreground-subtle focus:border-accent focus:outline-none"
+                  className="w-full resize-y rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm leading-6 text-zinc-900 placeholder:text-zinc-500 focus:border-brand focus:outline-none"
                 />
                 <div className="flex flex-row gap-2 md:flex-col">
                   <button
                     type="button"
                     onClick={runMatch}
                     disabled={!targetText.trim()}
-                    className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-navy px-6 text-sm font-medium text-white transition-all hover:bg-navy-soft disabled:opacity-40 disabled:cursor-not-allowed md:px-8"
+                    className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-zinc-900 px-6 text-sm font-medium text-white transition-all hover:bg-zinc-800 disabled:opacity-40 disabled:cursor-not-allowed md:px-8"
                   >
                     Match
                   </button>
@@ -580,7 +580,7 @@ export default function NetworkCartographer() {
                     <button
                       type="button"
                       onClick={downloadMatches}
-                      className="inline-flex h-12 items-center justify-center rounded-full border border-border-strong bg-white px-6 text-sm font-medium text-navy transition-all hover:border-navy md:px-8"
+                      className="inline-flex h-12 items-center justify-center rounded-full border border-zinc-300 bg-white px-6 text-sm font-medium text-zinc-900 transition-all hover:border-zinc-900 md:px-8"
                     >
                       Export CSV
                     </button>
@@ -590,7 +590,7 @@ export default function NetworkCartographer() {
 
               {matchSummary && matches && (
                 <div className="mt-7">
-                  <div className="font-mono text-xs uppercase tracking-wider text-foreground-subtle">
+                  <div className="font-mono text-xs uppercase tracking-wider text-zinc-500">
                     {matchSummary.hit} of {matchSummary.queried} targets had a
                     match · {matchSummary.total} warm contacts total
                   </div>
@@ -609,7 +609,7 @@ export default function NetworkCartographer() {
                     ctaLabel="Have us follow up"
                     intent="Run outreach to warm contacts"
                     getContext={() => formatMatchesForLead(matches)}
-                    theme="firstshift"
+                   
                   />
                 </div>
               )}
@@ -621,10 +621,10 @@ export default function NetworkCartographer() {
       {/* PAIR WITH MATIC CTA */}
       {status === "done" && result && (
         <section className="mx-auto w-full max-w-7xl px-6 pb-16 sm:pb-24">
-          <div className="overflow-hidden rounded-3xl bg-navy p-7 text-white sm:p-16">
+          <div className="overflow-hidden rounded-lg bg-zinc-900 p-7 text-white sm:p-16">
             <div className="max-w-3xl">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white/80">
-                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                <span className="h-1.5 w-1.5 rounded-full bg-brand" />
                 Pair with MATIC
               </div>
               <h2 className="mt-5 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
@@ -639,7 +639,7 @@ export default function NetworkCartographer() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
                   href="/matic"
-                  className="inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 text-sm font-medium text-navy transition-all hover:bg-white/90"
+                  className="inline-flex h-12 items-center gap-2 rounded-full bg-white px-6 text-sm font-medium text-zinc-900 transition-all hover:bg-white/90"
                 >
                   Open MATIC
                   <svg
@@ -678,8 +678,8 @@ export default function NetworkCartographer() {
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent-soft px-3 py-1 text-xs font-medium uppercase tracking-wider text-accent-hover">
-      <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+    <div className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand-tint px-3 py-1 text-xs font-medium uppercase tracking-wider text-brand">
+      <span className="h-1.5 w-1.5 rounded-full bg-brand" />
       {children}
     </div>
   );
@@ -696,14 +696,14 @@ function Stat({
 }) {
   return (
     <div className="bg-white px-5 py-4">
-      <div className="font-mono text-[10px] uppercase tracking-wider text-foreground-subtle">
+      <div className="font-mono text-[10px] uppercase tracking-wider text-zinc-500">
         {label}
       </div>
-      <div className="mt-2 text-2xl font-semibold tracking-tight text-navy sm:text-3xl">
+      <div className="mt-2 text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
         {value}
       </div>
       {sub && (
-        <div className="mt-1 text-xs text-foreground-subtle">{sub}</div>
+        <div className="mt-1 text-xs text-zinc-500">{sub}</div>
       )}
     </div>
   );
@@ -717,7 +717,7 @@ function ViewToggle({
   setView: (v: View) => void;
 }) {
   return (
-    <div className="inline-flex items-center rounded-full border border-border-default bg-background-soft p-1">
+    <div className="inline-flex items-center rounded-full border border-zinc-200 bg-zinc-50 p-1">
       {(["map", "network"] as const).map((v) => (
         <button
           key={v}
@@ -725,8 +725,8 @@ function ViewToggle({
           onClick={() => setView(v)}
           className={`rounded-full px-4 py-1.5 text-xs font-medium uppercase tracking-wider transition-colors ${
             view === v
-              ? "bg-navy text-white"
-              : "text-foreground-subtle hover:text-navy"
+              ? "bg-zinc-900 text-white"
+              : "text-zinc-500 hover:text-zinc-900"
           }`}
         >
           {v}
@@ -768,10 +768,10 @@ function DropZone({
           setDragOver(false);
         }}
         onDrop={onDrop}
-        className={`group flex cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed bg-white px-8 py-20 text-center transition-colors ${
+        className={`group flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed bg-white px-8 py-20 text-center transition-colors ${
           dragOver
-            ? "border-accent bg-accent-soft"
-            : "border-border-strong hover:border-accent"
+            ? "border-accent bg-brand-tint"
+            : "border-zinc-300 hover:border-brand"
         }`}
       >
         <svg
@@ -783,23 +783,23 @@ function DropZone({
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="text-foreground-subtle group-hover:text-accent-hover"
+          className="text-zinc-500 group-hover:text-brand"
           aria-hidden="true"
         >
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
           <polyline points="17 8 12 3 7 8" />
           <line x1="12" y1="3" x2="12" y2="15" />
         </svg>
-        <div className="mt-5 text-base font-semibold text-navy sm:text-lg">
-          Drop your <code className="font-mono text-accent-hover">Connections.csv</code>{" "}
+        <div className="mt-5 text-base font-semibold text-zinc-900 sm:text-lg">
+          Drop your <code className="font-mono text-brand">Connections.csv</code>{" "}
           here
         </div>
-        <div className="mt-2 text-sm text-foreground-muted">
+        <div className="mt-2 text-sm text-zinc-600">
           Or click to browse. From LinkedIn:{" "}
           <em>Settings → Data privacy → Get a copy of your data → Connections</em>
         </div>
-        <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-border-default bg-background-soft px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-foreground-subtle">
-          <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+        <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-zinc-500">
+          <span className="h-1.5 w-1.5 rounded-full bg-brand" />
           Local-only · nothing uploaded
         </div>
         <input
@@ -811,7 +811,7 @@ function DropZone({
         />
       </label>
       {status === "parsing" && (
-        <p className="mt-4 text-center text-sm text-foreground-muted">
+        <p className="mt-4 text-center text-sm text-zinc-600">
           Parsing…
         </p>
       )}
@@ -834,16 +834,16 @@ function SidePanel({
   onClose: () => void;
 }) {
   return (
-    <aside className="rounded-3xl border border-border-default bg-white p-6 sm:p-7">
+    <aside className="rounded-lg border border-zinc-200 bg-white p-6 sm:p-7">
       {!group ? (
         <div className="flex h-full flex-col items-start justify-start">
-          <span className="font-mono text-xs font-medium text-accent-hover">
+          <span className="font-mono text-xs font-medium text-brand">
             SELECTION
           </span>
-          <h3 className="mt-1 text-xl font-semibold tracking-tight text-navy">
+          <h3 className="mt-1 text-xl font-semibold tracking-tight text-zinc-900">
             Click a circle
           </h3>
-          <p className="mt-3 text-sm leading-6 text-foreground-muted">
+          <p className="mt-3 text-sm leading-6 text-zinc-600">
             Each company in your network is shown. Click a circle (or a row
             in the Top 30 below) to see the people you know there.
           </p>
@@ -852,11 +852,11 @@ function SidePanel({
         <>
           <div className="flex items-start justify-between gap-3">
             <div>
-              <span className="font-mono text-xs font-medium text-accent-hover">
+              <span className="font-mono text-xs font-medium text-brand">
                 {group.people.length}{" "}
                 {group.people.length === 1 ? "person" : "people"}
               </span>
-              <h3 className="mt-1 text-xl font-semibold tracking-tight text-navy">
+              <h3 className="mt-1 text-xl font-semibold tracking-tight text-zinc-900">
                 {group.name}
               </h3>
             </div>
@@ -864,7 +864,7 @@ function SidePanel({
               type="button"
               onClick={onClose}
               aria-label="Close panel"
-              className="rounded-full p-1 text-foreground-subtle hover:bg-background-soft hover:text-navy"
+              className="rounded-full p-1 text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900"
             >
               <svg
                 width="16"
@@ -882,7 +882,7 @@ function SidePanel({
               </svg>
             </button>
           </div>
-          <ul className="mt-5 divide-y divide-border-default">
+          <ul className="mt-5 divide-y divide-zinc-200">
             {people.map((p, i) => (
               <li key={`${p.fullName}-${i}`} className="py-3">
                 <div className="flex items-baseline justify-between gap-3">
@@ -892,23 +892,23 @@ function SidePanel({
                         href={p.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="truncate text-sm font-medium text-navy hover:text-accent-hover"
+                        className="truncate text-sm font-medium text-zinc-900 hover:text-brand"
                       >
                         {p.fullName}
                       </a>
                     ) : (
-                      <div className="truncate text-sm font-medium text-navy">
+                      <div className="truncate text-sm font-medium text-zinc-900">
                         {p.fullName}
                       </div>
                     )}
                     {p.position && (
-                      <div className="mt-0.5 truncate text-xs text-foreground-muted">
+                      <div className="mt-0.5 truncate text-xs text-zinc-600">
                         {p.position}
                       </div>
                     )}
                   </div>
                   {p.connectedDate && (
-                    <div className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-foreground-subtle">
+                    <div className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-zinc-500">
                       {formatDate(p.connectedDate)}
                     </div>
                   )}
@@ -937,7 +937,7 @@ function ZoomButton({
       onClick={onClick}
       aria-label={label}
       title={label}
-      className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border-default bg-white text-navy shadow-sm transition-colors hover:border-accent hover:text-accent-hover"
+      className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-zinc-200 bg-white text-zinc-900 shadow-sm transition-colors hover:border-brand hover:text-brand"
     >
       {iconKey === "plus" && (
         <svg
@@ -995,21 +995,21 @@ function ZoomButton({
 function MatchRow({ match }: { match: Match }) {
   const hit = match.people.length > 0;
   return (
-    <div className="rounded-2xl border border-border-default bg-white p-4 sm:p-5">
+    <div className="rounded-2xl border border-zinc-200 bg-white p-4 sm:p-5">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <div className="min-w-0">
-          <div className="truncate text-sm font-semibold text-navy">
+          <div className="truncate text-sm font-semibold text-zinc-900">
             {match.query}
           </div>
           {hit && match.matchedCompanyName !== match.query && (
-            <div className="mt-0.5 truncate font-mono text-[11px] uppercase tracking-wider text-foreground-subtle">
+            <div className="mt-0.5 truncate font-mono text-[11px] uppercase tracking-wider text-zinc-500">
               Matched as {match.matchedCompanyName}
             </div>
           )}
         </div>
         <div
           className={`font-mono text-[11px] uppercase tracking-wider ${
-            hit ? "text-accent-hover" : "text-foreground-subtle"
+            hit ? "text-brand" : "text-zinc-500"
           }`}
         >
           {hit
@@ -1026,15 +1026,15 @@ function MatchRow({ match }: { match: Match }) {
                   href={p.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-navy hover:text-accent-hover"
+                  className="text-zinc-900 hover:text-brand"
                 >
                   {p.fullName}
                 </a>
               ) : (
-                <span className="text-navy">{p.fullName}</span>
+                <span className="text-zinc-900">{p.fullName}</span>
               )}
               {p.position && (
-                <span className="text-foreground-subtle"> · {p.position}</span>
+                <span className="text-zinc-500"> · {p.position}</span>
               )}
             </li>
           ))}

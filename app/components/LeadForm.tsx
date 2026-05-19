@@ -10,7 +10,6 @@ export default function LeadForm({
   ctaLabel,
   intent,
   getContext,
-  theme = "movementum",
 }: {
   tool: Tool;
   /** The big button label users click to expand the form. */
@@ -19,8 +18,6 @@ export default function LeadForm({
   intent: string;
   /** Function that returns the current tool output to send as context. */
   getContext: () => string;
-  /** Color theme — "movementum" (matic) or "firstshift" (tools pages). */
-  theme?: "movementum" | "firstshift";
 }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
@@ -62,20 +59,15 @@ export default function LeadForm({
   }
 
   // ---- THEME -----------------------------------------------------
-  const isFirstshift = theme === "firstshift";
-  const primaryBtn = isFirstshift
-    ? "bg-navy hover:bg-navy-soft text-white"
-    : "bg-brand hover:bg-[#0091c2] text-white";
-  const linkColor = isFirstshift ? "text-accent-hover" : "text-brand";
-  const focusBorder = isFirstshift ? "focus:border-accent" : "focus:border-brand";
-  const cardBorder = isFirstshift ? "border-border-default" : "border-zinc-200";
-  const cardBg = isFirstshift ? "bg-background-soft" : "bg-zinc-50";
-  const labelText = isFirstshift
-    ? "text-foreground-subtle"
-    : "text-zinc-500";
-  const inputBorder = isFirstshift ? "border-border-default" : "border-zinc-200";
-  const headingText = isFirstshift ? "text-navy" : "text-zinc-900";
-  const mutedText = isFirstshift ? "text-foreground-muted" : "text-zinc-600";
+  const primaryBtn = "bg-brand hover:bg-[#0091c2] text-white";
+  const linkColor = "text-brand";
+  const focusBorder = "focus:border-brand";
+  const cardBorder = "border-zinc-200";
+  const cardBg = "bg-zinc-50";
+  const labelText = "text-zinc-500";
+  const inputBorder = "border-zinc-200";
+  const headingText = "text-zinc-900";
+  const mutedText = "text-zinc-600";
 
   // ---- STATES ----------------------------------------------------
   if (status === "success") {

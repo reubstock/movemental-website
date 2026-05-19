@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Eyebrow from "../components/Eyebrow";
 
 export const metadata = {
   title: "Tools | Movementum",
@@ -11,9 +12,7 @@ type Tool = {
   name: string;
   subtitle: string;
   description: string;
-  // Gradient background wash for the card
   bgClass: string;
-  // Color used for the step label, hover border, subtitle, and arrow
   tintHex: string;
   available: boolean;
   newTab?: boolean;
@@ -52,115 +51,116 @@ const TOOLS: Tool[] = [
     name: "AUDIENCE",
     subtitle: "Letter → People",
     description:
-      "Once you have the letter, find the people. Amplifier shortlist, network segmentation, profile briefs — generated from LinkedIn data you paste or upload.",
+      "Once you have the letter, find the people. Amplifier shortlist, network segmentation, profile briefs. In development — preview the shape.",
     bgClass: "from-tint-butter/70 via-tint-butter/25 to-transparent",
     tintHex: "#ab8a30",
-    available: true,
-    newTab: true,
+    available: false,
   },
 ];
-
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent-soft px-3 py-1 text-xs font-medium uppercase tracking-wider text-accent-hover">
-      <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-      {children}
-    </div>
-  );
-}
 
 export default function ToolsHub() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden border-b border-border-default">
-        <div className="absolute inset-0 gradient-mesh" />
-        <div className="relative mx-auto w-full max-w-7xl px-6 pt-14 pb-12 sm:pt-20 sm:pb-16">
-          <Eyebrow>Tools</Eyebrow>
-          <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-tight text-navy sm:text-5xl md:text-6xl">
-            <span className="gradient-text">Movementum tools</span>, run live.
-          </h1>
-          <p className="mt-6 max-w-3xl text-lg leading-8 text-foreground-muted sm:text-xl">
-            Each tool encodes one of the methods Movementum uses on every
-            engagement. They&rsquo;re the same workflows we&rsquo;d run with a
-            client in the working sessions — useful on their own, and the
-            starting point of the six-month program.
-          </p>
+      <section className="relative overflow-hidden border-b border-zinc-100">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(55% 55% at 85% 10%, rgba(0,182,240,0.08) 0%, transparent 60%), radial-gradient(45% 45% at 5% 90%, rgba(93,208,245,0.06) 0%, transparent 60%)",
+          }}
+        />
+        <div className="relative px-5 md:px-8 py-16 md:py-20">
+          <div className="max-w-5xl mx-auto">
+            <Eyebrow>Tools</Eyebrow>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tight text-zinc-900 leading-[0.98] mb-7 max-w-[16ch]">
+              Movementum tools,{" "}
+              <span className="text-brand">run live.</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-zinc-600 leading-snug max-w-3xl">
+              Each tool encodes one of the methods Movementum uses on every
+              engagement. The same workflows we&rsquo;d run with a client in
+              the working sessions — useful on their own, and the starting
+              point of the six-month program.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* TOOL CARDS */}
-      <section className="mx-auto w-full max-w-7xl px-6 py-12 sm:py-16">
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {TOOLS.map((t) => (
-            <Link
-              key={t.slug}
-              href={t.href}
-              {...(t.newTab
-                ? { target: "_blank", rel: "noopener noreferrer" }
-                : {})}
-              style={
-                {
-                  "--card-tint": t.tintHex,
-                } as React.CSSProperties
-              }
-              className={`group relative overflow-hidden rounded-3xl border border-border-default bg-white bg-gradient-to-br ${t.bgClass} p-8 transition-all hover:shadow-lg hover:shadow-navy/5`}
-              onMouseEnter={undefined}
-            >
-              {/* Hover border color via inline var so each card gets its own */}
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity group-hover:opacity-100"
-                style={{
-                  boxShadow: `inset 0 0 0 1.5px var(--card-tint)`,
-                }}
-              />
-              <div className="relative flex items-baseline justify-between">
+      <section className="px-5 md:px-8 py-12 md:py-16 bg-[#fafaf8] border-b border-zinc-100">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {TOOLS.map((t) => (
+              <Link
+                key={t.slug}
+                href={t.href}
+                {...(t.newTab
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+                style={
+                  {
+                    "--card-tint": t.tintHex,
+                  } as React.CSSProperties
+                }
+                className={`group relative overflow-hidden rounded-lg border border-zinc-200 bg-white bg-gradient-to-br ${t.bgClass} p-7 md:p-8 transition-all hover:shadow-lg hover:shadow-zinc-900/5`}
+              >
                 <span
-                  className="font-mono text-xs font-medium"
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 rounded-lg opacity-0 transition-opacity group-hover:opacity-100"
+                  style={{
+                    boxShadow: `inset 0 0 0 1.5px var(--card-tint)`,
+                  }}
+                />
+                <div className="relative flex items-baseline justify-between">
+                  <span
+                    className="text-[11px] font-mono font-bold tracking-[0.18em]"
+                    style={{ color: t.tintHex }}
+                  >
+                    TOOL {t.step}
+                  </span>
+                  <span
+                    className={`text-[10px] font-mono font-bold tracking-[0.18em] ${
+                      t.available ? "text-zinc-500" : "text-zinc-400"
+                    }`}
+                  >
+                    {t.available ? "LIVE" : "SOON"}
+                  </span>
+                </div>
+                <h2 className="relative mt-5 text-3xl md:text-4xl font-black tracking-tight text-zinc-900">
+                  {t.name}
+                </h2>
+                <div
+                  className="relative mt-1 text-xs md:text-sm font-mono font-bold tracking-[0.16em] uppercase"
                   style={{ color: t.tintHex }}
                 >
-                  TOOL {t.step}
-                </span>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-foreground-subtle">
-                  {t.available ? "Live" : "Soon"}
-                </span>
-              </div>
-              <h2 className="relative mt-6 text-4xl font-semibold tracking-tight text-navy">
-                {t.name}
-              </h2>
-              <div
-                className="relative mt-1 text-sm font-medium uppercase tracking-wider"
-                style={{ color: t.tintHex }}
-              >
-                {t.subtitle}
-              </div>
-              <p className="relative mt-5 text-base leading-7 text-foreground-muted">
-                {t.description}
-              </p>
-              <div
-                className="relative mt-8 inline-flex items-center gap-2 text-sm font-medium text-navy transition-colors"
-                style={{ color: undefined }}
-              >
-                Open {t.name}
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="transition-transform group-hover:translate-x-1"
-                  aria-hidden="true"
-                >
-                  <path d="M5 12h14" />
-                  <path d="m13 6 6 6-6 6" />
-                </svg>
-              </div>
-            </Link>
-          ))}
+                  {t.subtitle}
+                </div>
+                <p className="relative mt-5 text-base md:text-lg text-zinc-600 leading-relaxed">
+                  {t.description}
+                </p>
+                <div className="relative mt-7 inline-flex items-center gap-2 text-xs font-mono font-bold tracking-[0.18em] uppercase text-zinc-900 transition-colors">
+                  {t.available ? `Open ${t.name}` : `Preview ${t.name}`}
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="transition-transform group-hover:translate-x-1"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m13 6 6 6-6 6" />
+                  </svg>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </>

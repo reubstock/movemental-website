@@ -20,7 +20,7 @@ export default function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative px-5 md:px-8 py-28 md:py-40 lg:py-48 border-b border-zinc-100 overflow-hidden">
+      <section className="relative px-5 md:px-8 pt-6 md:pt-10 pb-28 md:pb-36 lg:pb-44 border-b border-zinc-100 overflow-hidden">
         <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none"
